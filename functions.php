@@ -685,16 +685,16 @@ function locations_for_map(){
     add_action('add_meta_boxes', 'wporg_add_custom_box');
     function wporg_add_custom_box() {
         add_meta_box(
-            'location_picker_box',   // Unique ID
-            'Location Picker',  // Box title
-            'location_picker_box_html',  // Content callback, must be of type callable
+            'location_finder_box',   // Unique ID
+            'Location Finder',  // Box title
+            'location_finder_box_html',  // Content callback, must be of type callable
             'location'  // Post type
         );
     }
-    function location_picker_box_html() {
+    function location_finder_box_html() {
         $str =  '<input type="text"  id="location_search" name="location_search" placeholder="type location here" />';
         $str .= '<a href="#" id="location_search_button">Search</a>';
-        $str .= '<p id="location_result"></p>';
+        $str .= '<ul id="location_results"></ul>';
 
         echo $str;
     }
