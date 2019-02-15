@@ -36,8 +36,8 @@ if (function_exists('add_theme_support'))
 
 
 
-// Localisation Support
-load_theme_textdomain('webfactor', get_template_directory() . '/languages');
+    // Localisation Support
+    load_theme_textdomain('webfactor', get_template_directory() . '/languages');
 }
 
 /*------------------------------------*\
@@ -76,25 +76,37 @@ function wf_version(){
 // Load HTML5 Blank scripts (header.php)
 function webfactor_header_scripts()
 {
-    if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
+    if ($GLOBALS['pagenow'] != 'wp-login.php') {
 
 
-    $tdu = get_template_directory_uri();
+        $tdu = get_template_directory_uri();
 
-       wp_deregister_script('jquery');
+        wp_register_script('gmaps', '//maps.google.com/maps/api/js?key=AIzaSyAxQfqRqtPLAW4BolFMCxTiv9y--R8CXdU', array(), wf_version(), true  );
+        wp_enqueue_script('gmaps'); // Enqueue it!
 
-        // wp_register_script('featherlight', $tdu  . '/js/featherlight.js', array('jquery'), wf_version(), true  );
-        // wp_enqueue_script('featherlight'); // Enqueue it!
-        //
-        // wp_register_script('fl_gallery', $tdu  . '/js/featherlight.gallery.js', array('jquery'), wf_version(), true  );
-        // wp_enqueue_script('fl_gallery'); // Enqueue it!
-
-        wp_register_script('lazyload', $tdu  . '/js/lazyload.min.js', array(), wf_version(), true  );
-        wp_enqueue_script('lazyload'); // Enqueue it!
+        if (is_admin()) {
+            wp_register_script('adminscripts', $tdu  . '/js/adminscripts.js', array(), wf_version(), true  );
+            wp_enqueue_script('adminscripts'); // Enqueue it!
+        } else {
 
 
-        wp_register_script('scripts', $tdu  . '/js/scripts.js', array(), wf_version(), true  );
-        wp_enqueue_script('scripts'); // Enqueue it!
+            wp_deregister_script('jquery');
+
+            // wp_register_script('featherlight', $tdu  . '/js/featherlight.js', array('jquery'), wf_version(), true  );
+            // wp_enqueue_script('featherlight'); // Enqueue it!
+            //
+            // wp_register_script('fl_gallery', $tdu  . '/js/featherlight.gallery.js', array('jquery'), wf_version(), true  );
+            // wp_enqueue_script('fl_gallery'); // Enqueue it!
+
+            wp_register_script('lazyload', $tdu  . '/js/lazyload.min.js', array(), wf_version(), true  );
+            wp_enqueue_script('lazyload'); // Enqueue it!
+
+
+
+            wp_register_script('scripts', $tdu  . '/js/scripts.js', array(), wf_version(), true  );
+            wp_enqueue_script('scripts'); // Enqueue it!
+
+        }
 
 
 
@@ -117,7 +129,7 @@ function webfactor_styles()
     $tdu = get_template_directory_uri();
 
 
-     wp_dequeue_style( 'wp-block-library' );
+    wp_dequeue_style( 'wp-block-library' );
 
     // wp_register_style('featherlightcss', $tdu  . '/js/featherlight.css', array(), wf_version()  );
     // wp_enqueue_style('featherlightcss'); // Enqueue it!
@@ -613,61 +625,80 @@ function locations_for_map(){
             'posts_per_page' => -1
         ) );
 
-    $ret = array();
-    foreach ($locations as $location) {
+        $ret = array();
+        foreach ($locations as $location) {
 
-        $z = new stdClass();
+            $z = new stdClass();
 
 
-        $latlon = get_field('latitude',  $location->ID);
-        $latlonsplit = explode( ',', $latlon);
+            $latlon = get_field('latitude',  $location->ID);
+            $latlonsplit = explode( ',', $latlon);
 
-        if (sizeof($latlonsplit) == 2) {
-            $z->title = $location->post_title;
-            $z->lat = $latlonsplit[0];
-            $z->lng = $latlonsplit[1];
-            $z->id =  $location->ID;
-            if ( $z->lat != '' )  array_push($ret, $z);
+            if (sizeof($latlonsplit) == 2) {
+                $z->title = $location->post_title;
+                $z->lat = $latlonsplit[0];
+                $z->lng = $latlonsplit[1];
+                $z->id =  $location->ID;
+                if ( $z->lat != '' )  array_push($ret, $z);
+            }
+
+
         }
 
+        echo json_encode( $ret,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK );
 
     }
 
-    echo json_encode( $ret,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK );
-
-}
 
 
-
-function nice_date($string, $format) {
-    $time = strtotime($string);
-    $d =  date($format, $time);
-    return $d;
-}
-
-
-// function show_all_on_expense_archive( $wp_query ) {
-// 	if ( is_archive() ){
-// 		global $wp_query;
-//         $wp_query->set( 'posts_per_page',-1 );
-//
-// 	}
-// }
-// add_filter('pre_get_posts', 'show_all_on_expense_archive' );
-//
-
-add_filter('manage_location_posts_columns', 'custom_location_columns');
-function custom_location_columns( $defaults ) {
-    $defaults['latitude']  = "Lng/Lat";
-    return $defaults;
-}
-
-
-add_action( 'manage_location_posts_custom_column', 'custom_location_table_content', 10, 2 );
-function custom_location_table_content( $column_name, $post_id ) {
-    if ($column_name == 'latitude') {
-        echo get_field('latitude', $post_id);
+    function nice_date($string, $format) {
+        $time = strtotime($string);
+        $d =  date($format, $time);
+        return $d;
     }
-}
 
-?>
+
+    // function show_all_on_expense_archive( $wp_query ) {
+    // 	if ( is_archive() ){
+    // 		global $wp_query;
+    //         $wp_query->set( 'posts_per_page',-1 );
+    //
+    // 	}
+    // }
+    // add_filter('pre_get_posts', 'show_all_on_expense_archive' );
+    //
+
+    add_filter('manage_location_posts_columns', 'custom_location_columns');
+    function custom_location_columns( $defaults ) {
+        $defaults['latitude']  = "Lng/Lat";
+        return $defaults;
+    }
+
+
+    add_action( 'manage_location_posts_custom_column', 'custom_location_table_content', 10, 2 );
+    function custom_location_table_content( $column_name, $post_id ) {
+        if ($column_name == 'latitude') {
+            echo get_field('latitude', $post_id);
+        }
+    }
+
+    add_action('add_meta_boxes', 'wporg_add_custom_box');
+    function wporg_add_custom_box() {
+        add_meta_box(
+            'location_picker_box',   // Unique ID
+            'Location Picker',  // Box title
+            'location_picker_box_html',  // Content callback, must be of type callable
+            'location'  // Post type
+        );
+    }
+    function location_picker_box_html() {
+        $str =  '<input type="text"  id="location_search" name="location_search" placeholder="type location here" />';
+        $str .= '<a href="#" id="location_search_button">Search</a>';
+        $str .= '<p id="location_result"></p>';
+
+        echo $str;
+    }
+
+
+
+    ?>
