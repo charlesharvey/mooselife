@@ -12,7 +12,21 @@ window.onload = function(){
     if (typeof locations !== 'undefined' && typeof google !== 'undefined') {
 
         // console.table(locations);
-
+        google.maps.LatLng.prototype.kmTo = function(a){
+            var e = Math, ra = e.PI/180;
+            var b = this.lat() * ra, c = a.lat() * ra, d = b - c;
+            var g = this.lng() * ra - a.lng() * ra;
+            var f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos
+            (c) * e.pow(e.sin(g/2), 2)));
+            return f * 6378.137;
+        }
+        google.maps.Polyline.prototype.inKm = function(n){
+            var a = this.getPath(n), len = a.getLength(), dist = 0;
+            for (var i=0; i < len-1; i++) {
+               dist += a.getAt(i).kmTo(a.getAt(i+1));
+            }
+            return dist;
+        }
 
         var map_theme=[{"featureType": "administrative","elementType": "labels.text.fill","stylers": [{"color": "#444444"}]},{"featureType": "landscape","elementType": "all","stylers": [{"color": "#f2f2f2"}]},{"featureType": "poi","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "all","stylers": [{"saturation": -100},{"lightness": 45}]},{"featureType": "road.highway","elementType": "all","stylers": [{"visibility": "simplified"}]},{"featureType": "road.arterial","elementType": "labels.icon","stylers": [{"visibility": "off"}]},{"featureType": "transit","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "water","elementType": "all","stylers": [{"color": "#46bcec"},{"visibility": "on"}]}];
 
@@ -55,7 +69,7 @@ window.onload = function(){
             icons: [{
                 icon: lineSymbol,
                 offset: '0',
-                repeat: '240px'
+                repeat: '200px'
             }],
             map: map,
             geodesic: true,
@@ -63,6 +77,7 @@ window.onload = function(){
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
+
 
 
 
@@ -123,6 +138,14 @@ window.onload = function(){
 
             }
         });
+
+        var total_distance =  document.getElementById('total_distance');
+        var total_kms =  flightPath.inKm();
+        if (total_kms) {
+            total_distance.innerHTML = '~' + Math.round(total_kms) + ' KM ';
+        }
+
+
 
 
 

@@ -651,6 +651,32 @@ function locations_for_map(){
 
 
 
+    function days_travelled($locations) {
+        if (sizeof($locations ) > 1) {
+            $first = $locations[0];
+            $last = end($locations);
+
+            $f_date = strtotime($first->post_date);
+            $l_date = strtotime($last->post_date);
+            $diff = ($f_date - $l_date);
+            $diff_in_days = round($diff / 60 / 60 /24);
+
+            if ($diff_in_days == 1) {
+                return '1 day';
+            } else {
+                return $diff_in_days . ' days';
+            }
+            
+
+
+        } else {
+            return 0;
+        }
+
+    }
+
+
+
     function nice_date($string, $format) {
         $time = strtotime($string);
         $d =  date($format, $time);

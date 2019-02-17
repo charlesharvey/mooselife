@@ -9,14 +9,21 @@
 
     <div id="map_container"></div>
     <aside>
-
-
-        <ul  id="map_functions">
-                <li><a class="button" id="see_all" href="#">See All</a></li>
-                <li><a class="button" id="see_latest" href="#">Latest</a></li>
-        </ul>
-
         <?php $locations = get_posts( array('post_type' => 'location', 'posts_per_page' => -1 )); ?>
+        <?php $days_travelled = days_travelled($locations); ?>
+
+        <div  id="map_functions">
+            <ul>
+            <li><a class="button" id="see_all" href="#">See all</a></li>
+            <li><a class="button" id="see_latest" href="#">Latest</a></li>
+            </ul>
+            <ul class="right">
+                <li><a class="button" id="days_spent" href="#"><?php echo $days_travelled; ?></a></li>
+                <li><a class="button" id="total_distance" href="#"> ... </a></li>
+            </ul>
+        </div>
+
+
         <?php foreach ($locations as $location) :  setup_postdata( $location );  ?>
             <?php $gallery = get_field('gallery', $location->ID); ?>
             <?php $day = nice_date($location->post_date, 'j'); ?>

@@ -96,22 +96,29 @@ aside {
 }
 
 
+#map_functions  {
+    display: flex;
 
-ul#map_functions {
+}
+#map_functions ul {
 margin: 0 0 20px;
 padding: 0;
+flex: 1;
+
 
 }
 
-ul#map_functions li {
+#map_functions ul li {
     margin: 0;
     padding: 0;
     display: inline-block;
     font-size: 1.2em;
 }
-ul#map_functions li a {
-text-transform: uppercase;
-
+#map_functions ul li a {
+     text-transform: uppercase;
+}
+ul.right {
+    text-align: right;
 }
 
 
