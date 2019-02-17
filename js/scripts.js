@@ -28,11 +28,9 @@ window.onload = function(){
         };
 
 
+
         var map_container =  document.getElementById('map_container');
-        // map_container.css({
-        //     width : '100%',
-        //     height: 560
-        // })
+
 
 
 
@@ -84,23 +82,50 @@ window.onload = function(){
                 $open_markers[index].addEventListener("click", function(e) {
                     e.preventDefault();
                     var $this = $open_markers[index];
-                        var $location_id = $this.dataset.id;
-                        if ($location_id) {
-                             for (var i = 0; i < markers.length; i++) {
-                                 var marker = markers[i];
-                                 if (marker.id == $location_id) {
-                                     infowindow.setContent( marker.title );
-                                     infowindow.open(map, marker);
-                                     // map.setCenter( marker.position );
-                                 }
-                             }
-
+                    var $location_id = $this.dataset.id;
+                    if ($location_id) {
+                        for (var i = 0; i < markers.length; i++) {
+                            var marker = markers[i];
+                            if (marker.id == $location_id) {
+                                openMarker(marker);
+                            }
                         }
+
+                    }
 
 
                 })
             })(op);
+        };
+
+        function openMarker(marker) {
+            infowindow.setContent( marker.title );
+            infowindow.open(map, marker);
+
+            // map.setCenter( marker.position );
         }
+
+
+        var see_all =  document.getElementById('see_all');
+        see_all.addEventListener("click", function(e) {
+            e.preventDefault();
+            if (bounds) {
+                map.fitBounds(bounds);
+            }
+        });
+        var see_latest =  document.getElementById('see_latest');
+        see_latest.addEventListener("click", function(e) {
+            e.preventDefault();
+            if (markers) {
+                var marker = markers[markers.length -1];
+                openMarker(marker);
+                map.setZoom(12);
+
+            }
+        });
+
+
+
 
 
 

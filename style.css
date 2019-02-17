@@ -27,9 +27,25 @@ p {
 
 a {
     transition: all 0.3;
+    text-decoration: none;
 }
 a:link, a:visited, a:active {
     color: #f32;
+}
+
+
+a.button {
+    margin: 0;
+    padding: 5px 20px;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    display: inline-block;
+    background: white;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+a.button:hover {
+    background-color: #f32;
+    color: white;
 }
 
 #map_container {
@@ -77,6 +93,25 @@ aside {
 
 .location h4 {
     cursor: pointer
+}
+
+
+
+ul#map_functions {
+margin: 0 0 20px;
+padding: 0;
+
+}
+
+ul#map_functions li {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    font-size: 1.2em;
+}
+ul#map_functions li a {
+text-transform: uppercase;
+
 }
 
 
