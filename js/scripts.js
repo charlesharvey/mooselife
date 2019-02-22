@@ -30,18 +30,6 @@ window.onload = function(){
 
 
         var map_container =  document.getElementById('map_container');
-
-
-        var colors = [
-            '#e74c3c',
-            '#e67e22',
-            '#f1c40f',
-            '#27ae60',
-            '#2980b9',
-            '#9b59b6',
-        ]
-
-
         var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
         };
@@ -55,14 +43,16 @@ window.onload = function(){
 
         for (var  i = 0;  i < locations.length ;i++) {
 
+            var hue = i / locations.length * 360;
+            var color = hslToHex(hue, 90, 50);
+
             var location = locations[i];
-            var color =  colors[i % colors.length];
             if (location != null) {
                 addPointToMap(map, location, bounds, infowindow, markers, color);
             }
 
             if (i < locations.length - 1) {
-                color =  colors[ (i  + 1) % colors.length];
+
                 var b_location = locations[i +1 ];
                 var path_locations = [ location, b_location ];
                 var flightPath = new google.maps.Polyline({
@@ -211,3 +201,33 @@ function addPointToMap(map,  location, bounds, infowindow, markers, color ) {
 
 
 };
+
+
+function hslToHex(h, s, l) {
+    h /= 360;
+    s /= 100;
+    l /= 100;
+    var r, g, b;
+    if (s === 0) {
+        r = g = b = l; // achromatic
+    } else {
+        var hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+    var toHex = x => {
+        var hex = Math.round(x * 255).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
