@@ -9,24 +9,10 @@ window.onload = function(){
 
 
 
+
+
     if (typeof locations !== 'undefined' && typeof google !== 'undefined') {
 
-        // console.table(locations);
-        google.maps.LatLng.prototype.kmTo = function(a){
-            var e = Math, ra = e.PI/180;
-            var b = this.lat() * ra, c = a.lat() * ra, d = b - c;
-            var g = this.lng() * ra - a.lng() * ra;
-            var f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos
-            (c) * e.pow(e.sin(g/2), 2)));
-            return f * 6378.137;
-        }
-        google.maps.Polyline.prototype.inKm = function(n){
-            var a = this.getPath(n), len = a.getLength(), dist = 0;
-            for (var i=0; i < len-1; i++) {
-               dist += a.getAt(i).kmTo(a.getAt(i+1));
-            }
-            return dist;
-        }
 
         var map_theme=[{"featureType": "administrative","elementType": "labels.text.fill","stylers": [{"color": "#444444"}]},{"featureType": "landscape","elementType": "all","stylers": [{"color": "#f2f2f2"}]},{"featureType": "poi","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "all","stylers": [{"saturation": -100},{"lightness": 45}]},{"featureType": "road.highway","elementType": "all","stylers": [{"visibility": "simplified"}]},{"featureType": "road.arterial","elementType": "labels.icon","stylers": [{"visibility": "off"}]},{"featureType": "transit","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "water","elementType": "all","stylers": [{"color": "#46bcec"},{"visibility": "on"}]}];
 
@@ -46,7 +32,20 @@ window.onload = function(){
         var map_container =  document.getElementById('map_container');
 
 
+        var colors = [
+            '#e74c3c',
+            '#e67e22',
+            '#f1c40f',
+            '#27ae60',
+            '#2980b9',
+            '#9b59b6',
+        ]
 
+
+        var lineSymbol = {
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+        };
+        var km_travelled = 0;
 
 
         var map = new google.maps.Map( map_container , map_options);
@@ -55,28 +54,35 @@ window.onload = function(){
         var markers = [];
 
         for (var  i = 0;  i < locations.length ;i++) {
+
             var location = locations[i];
+            var color =  colors[i % colors.length];
             if (location != null) {
-                addPointToMap(map, location, bounds, infowindow, markers);
+                addPointToMap(map, location, bounds, infowindow, markers, color);
+            }
+
+            if (i < locations.length - 1) {
+                color =  colors[ (i  + 1) % colors.length];
+                var b_location = locations[i +1 ];
+                var path_locations = [ location, b_location ];
+                var flightPath = new google.maps.Polyline({
+                    path: path_locations,
+                    icons: [{
+                        icon: lineSymbol,
+                        offset: '0',
+                        repeat: '200px'
+                    }],
+                    map: map,
+                    geodesic: true,
+                    strokeColor:  color ,
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+
+                km_travelled +=  distanceCalc( location, b_location );
             }
 
         }
-        var lineSymbol = {
-            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-        };
-        var flightPath = new google.maps.Polyline({
-            path: locations,
-            icons: [{
-                icon: lineSymbol,
-                offset: '0',
-                repeat: '200px'
-            }],
-            map: map,
-            geodesic: true,
-            strokeColor: '#FF3322',
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-        });
 
 
 
@@ -140,9 +146,8 @@ window.onload = function(){
         });
 
         var total_distance =  document.getElementById('total_distance');
-        var total_kms =  flightPath.inKm();
-        if (total_kms) {
-            total_distance.innerHTML = '~' + Math.round(total_kms) + ' KM ';
+        if (km_travelled) {
+            total_distance.innerHTML = '~' + Math.round(km_travelled) + ' KM ';
         }
 
 
@@ -161,9 +166,18 @@ window.onload = function(){
 
 
 
+function distanceCalc(a,b) {
+    var e = Math, ra = e.PI/180;
+    var alat = a.lat * ra, blat = b.lat * ra, d = alat - blat;
+    var g = a.lng * ra - b.lng * ra;
+    var f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(alat) * e.cos
+    (blat) * e.pow(e.sin(g/2), 2)));
+    return f * 6378.137;
+}
 
 
-function addPointToMap(map,  location, bounds, infowindow, markers ) {
+
+function addPointToMap(map,  location, bounds, infowindow, markers, color ) {
     var latitude = location.lat;
     var longitude = location.lng;
     var latlng = new google.maps.LatLng(  latitude , longitude);
@@ -175,12 +189,10 @@ function addPointToMap(map,  location, bounds, infowindow, markers ) {
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 7,
-            fillColor: "#FF3322",
-            strokeColor: '#FF3322',
+            fillColor: color,
+            strokeColor: color,
             fillOpacity: 0.8,
             strokeWeight: 1
-
-
         }
     });
 
