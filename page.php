@@ -44,7 +44,7 @@
                     <?php if ($gallery): ?>
                         <div class="gallery" data-featherlight-gallery data-featherlight-filter="a">
                             <?php foreach ($gallery as $image) : ?>
-                                <a target="gallery" href="<?php echo $image['sizes']['large']; ?>">
+                                <a target="gallery" class="lightbox_link" href="<?php echo $image['sizes']['large']; ?>">
                                     <img width="<?php echo $image['sizes']['medium-width']; ?>" height="<?php echo $image['sizes']['medium-height']; ?>" class="lazyload" data-src="<?php echo $image['sizes']['medium']; ?>"  alt="" />
 
                                 </a>
@@ -70,8 +70,9 @@
     </script>
 
 
-    <div id="mylightbox">This div will be opened in a lightbox</div>
-
+<div id="lightbox_outer">
+    <div id="lightbox_inner">Loading...</div>
+</div>
 
 <?php endwhile; ?>
 

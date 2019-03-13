@@ -206,6 +206,33 @@ li.expense {
     padding: 0 0 20px;
 }
 
+
+#lightbox_outer {
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#lightbox_inner {
+    background: white;
+    padding: 20px;
+
+}
+
+#lightbox_inner img {
+    max-width: 80vw;
+    height: auto;
+
+}
+
 /*
 footer {
     display: none;

@@ -8,8 +8,38 @@ window.onload = function(){
 
 
 
+    // LIGHTBOX
+    // LIGHTBOX
+    var lightbox_outer =  document.getElementById('lightbox_outer');
+    var lightbox_inner =  document.getElementById('lightbox_inner');
+
+    lightbox_outer.addEventListener("click", function(e) {
+        lightbox_outer.style.display = "none";
+    });
+
+    var lightbox_links =  document.getElementsByClassName('lightbox_link');
+    for(var op = 0; op < lightbox_links.length; op++) {
+        (function(index) {
+            var llink = lightbox_links[index];
+            llink.addEventListener("click", function(e) {
+                e.preventDefault();
+                lightbox_outer.style.display = "flex";
+                var href = llink.getAttribute('href');
+                var img = '<img src="' + href + '"  alt="" />';
+                // lightbox_inner.appendChild(img);
+
+                                lightbox_inner.innerHTML = (img);
+
+            })
+        })(op);
+    };
 
 
+
+
+
+    // LIGHTBOX
+    // LIGHTBOX
 
     if (typeof locations !== 'undefined' && typeof google !== 'undefined') {
 
