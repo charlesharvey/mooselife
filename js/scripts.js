@@ -26,9 +26,7 @@ window.onload = function(){
                 lightbox_outer.style.display = "flex";
                 var href = llink.getAttribute('href');
                 var img = '<img src="' + href + '"  alt="" />';
-                // lightbox_inner.appendChild(img);
-
-                                lightbox_inner.innerHTML = (img);
+                lightbox_inner.innerHTML = (img);
 
             })
         })(op);
@@ -116,33 +114,67 @@ window.onload = function(){
         }
 
 
+        // if click on location box, open that google marker
+        var $location_boxes =  document.getElementsByClassName('location');
+        var $location_offsets = [];
+        calculateLocationOffset();
 
-        var $open_markers =  document.getElementsByClassName('open_marker');
-        for(var op = 0; op < $open_markers.length; op++) {
+        for(var lb = 0; lb < $location_boxes.length; lb++) {
             (function(index) {
-                $open_markers[index].addEventListener("click", function(e) {
-                    e.preventDefault();
-                    var $this = $open_markers[index];
-                    var $location_id = $this.dataset.id;
-                    if ($location_id) {
-                        for (var i = 0; i < markers.length; i++) {
-                            var marker = markers[i];
-                            if (marker.id == $location_id) {
-                                openMarker(marker);
-                            }
-                        }
-
-                    }
-
-
-                })
-            })(op);
+                var location_box = $location_boxes[index];
+                var $location_id = location_box.dataset.id;
+                // $location_offsets.push( {id: $location_id, offset: location_box.offsetTop   }  )
+                if ($location_id) {
+                    location_box.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        openMarkerFromId($location_id);
+                    })
+                }
+            })(lb);
         };
+
+        // if scroll down to a specific location box, open that google marker
+        var $window = window;
+        var currentBoxId = null;
+        $window.onscroll = function(e) {
+            var scrollY = $window.scrollY;
+            var nearestBox = $location_offsets.find( (locof) => (locof.offset) >= scrollY );
+            if (currentBoxId != nearestBox.id) {
+                currentBoxId = nearestBox.id;
+                openMarkerFromId(currentBoxId);
+                calculateLocationOffset();
+            }
+
+        };
+
+
+        function calculateLocationOffset() {
+            console.log('calculateLocationOffset');
+            $location_offsets = [];
+            for(var lb = 0; lb < $location_boxes.length; lb++) {
+                (function(index) {
+                    var location_box = $location_boxes[index];
+                    var $location_id = location_box.dataset.id;
+                    var offset = location_box.offsetTop + location_box.clientHeight;
+                    $location_offsets.push( {id: $location_id, offset: offset }  )
+                })(lb);
+            };
+        }
+
+
+
+        function openMarkerFromId(marker_id) {
+            for (var i = 0; i < markers.length; i++) {
+                var marker = markers[i];
+                if (marker.id == marker_id) {
+                    openMarker(marker);
+                }
+            }
+        }
 
         function openMarker(marker) {
             infowindow.setContent( marker.title );
             infowindow.open(map, marker);
-
             // map.setCenter( marker.position );
         }
 

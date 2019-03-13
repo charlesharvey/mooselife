@@ -70,7 +70,7 @@ function webfactor_nav()
 }
 
 function wf_version(){
-    return '0.0.9';
+    return '0.1.0';
 }
 
 // Load HTML5 Blank scripts (header.php)

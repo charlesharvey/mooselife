@@ -28,7 +28,7 @@
             <?php $gallery = get_field('gallery', $location->ID); ?>
             <?php $day = nice_date($location->post_date, 'j'); ?>
             <?php $month = nice_date($location->post_date, 'M'); ?>
-            <div class="location" id="location_<?php echo $location->ID; ?>">
+            <div class="location"  data-id="<?php echo $location->ID; ?>"  id="location_<?php echo $location->ID; ?>">
 
                 <div class="date_container">
                     <div class="day"><?php echo $day; ?></div>
@@ -37,7 +37,7 @@
                 <div class="stuff_container">
 
 
-                    <h4 class="open_marker"   data-id="<?php echo $location->ID; ?>"><?php echo $location->post_title; ?> </h4>
+                    <h4 class="open_marker"  ><?php echo $location->post_title; ?> </h4>
                     <div class="location_content">
                         <?php the_content(); ?>
                     </div>
