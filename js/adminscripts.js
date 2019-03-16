@@ -7,8 +7,10 @@ window.onload = function(){
 
         var geocoder = new google.maps.Geocoder();
 
-        var acf_address = document.getElementById('acf-field_5c8a99e4be06c');
-        var acf_lat = document.getElementById('acf-field_5c0e7fcb96661');
+        // var acf_address = document.getElementById('acf-field_5c8a99e4be06c');
+        // var acf_lat = document.getElementById('acf-field_5c0e7fcb96661');
+        var acf_address = document.getElementById('acf-field_5c8d0162b545f');
+        var acf_lat = document.getElementById('acf-field_5c26603eee560');
 
         if (acf_address) {
             acf_address.addEventListener("blur", function(e) {
@@ -36,7 +38,7 @@ window.onload = function(){
                         var latlng = lat + ', ' + lng;
                         input.value = latlng;
                     }
-                    
+
 
                 } else {
                     input.value = 'Error';
