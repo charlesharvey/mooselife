@@ -708,7 +708,7 @@ function locations_for_map(){
         }
     }
 
-    add_action('add_meta_boxes', 'wporg_add_custom_box');
+    // add_action('add_meta_boxes', 'wporg_add_custom_box');
     function wporg_add_custom_box() {
         add_meta_box(
             'location_finder_box',   // Unique ID
@@ -734,6 +734,8 @@ function locations_for_map(){
             $wp_query->set( 'order', 'DESC' );
         }
     }
+
+
 
 
 

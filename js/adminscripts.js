@@ -3,54 +3,43 @@ window.onload = function(){
     'use strict';
 
 
-
-
     if (typeof google !== 'undefined') {
 
         var geocoder = new google.maps.Geocoder();
 
-        var location_search = document.getElementById('location_search');
-        var location_search_button = document.getElementById('location_search_button');
-        var location_results = document.getElementById('location_results');
+        var acf_address = document.getElementById('acf-field_5c8a99e4be06c');
+        var acf_lat = document.getElementById('acf-field_5c0e7fcb96661');
 
-        if (location_search_button) {
-            location_search_button.addEventListener("click", function(e) {
+        if (acf_address) {
+            acf_address.addEventListener("blur", function(e) {
                 e.preventDefault();
-                codeAddress( location_search.value );
+                codeAddress( acf_address.value, acf_lat );
 
             });
         }
 
 
 
+        function codeAddress( address, input ) {
 
-        function codeAddress( address ) {
-
-            location_results.innerHTML = '';
+            // location_results.innerHTML = '';
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == 'OK') {
 
                     console.log(results);
 
-                    for (var r = 0; r < results.length; r++) {
-                        var result = results[r];
+                    if (results.length > 0) {
+                        var result = results[0];
                         var location = result.geometry.location
                         var lat = location.lat();
                         var lng = location.lng();
                         var latlng = lat + ', ' + lng;
-                        var node =  document.createElement("LI");
-                        var textnode = document.createTextNode( result.formatted_address + ' : ' +  latlng );
-                        node.appendChild(textnode);
-                        location_results.appendChild(node);
+                        input.value = latlng;
                     }
-
+                    
 
                 } else {
-                    var node =  document.createElement("LI");
-                    var textnode = document.createTextNode( 'Error' );
-                    node.appendChild(textnode);
-                    location_results.appendChild(node);
-                    console.log('Geocode was not successful for the following reason: ' + status);
+                    input.value = 'Error';
                 }
             });
         }
