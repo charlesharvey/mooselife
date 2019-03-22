@@ -46,7 +46,7 @@ window.onload = function(){
 
 
         var map_options = {
-            zoom: 11,
+            zoom: 9,
             mapTypeControl: true,
             scrollwheel: true,
             draggable: true,
