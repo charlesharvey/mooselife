@@ -96,6 +96,7 @@ aside {
 }
 
 
+
 #map_functions  {
     display: flex;
 
@@ -124,7 +125,22 @@ ul.right {
 
 .stuff_container {
     padding-left: 40px;
+    position: relative;
+}
 
+span.country {
+    position: absolute;
+    top:0;
+    right: 0;
+    text-transform: uppercase;
+    color: #aaa;
+    font-size: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.location:hover span.country  {
+    opacity: 1;
 }
 
 /* .title_and_date {

@@ -70,7 +70,7 @@ function webfactor_nav()
 }
 
 function wf_version(){
-    return '0.1.1';
+    return '0.1.2';
 }
 
 // Load HTML5 Blank scripts (header.php)
@@ -653,18 +653,25 @@ function locations_for_map(){
             $latlon = get_field('latitude',  $location->ID);
             $latlonsplit = explode( ',', $latlon);
 
+            $countries = get_the_terms( $location->ID, 'country');
+            $country = ( $countries ) ?  $countries[0]->name : '-';
+
             if (sizeof($latlonsplit) == 2) {
                 $z->title = $location->post_title;
-                $z->lat = $latlonsplit[0];
-                $z->lng = $latlonsplit[1];
+                $z->lat = round($latlonsplit[0] * 100000) / 100000;
+                $z->lng = round($latlonsplit[1] * 100000) / 100000;
                 $z->id =  $location->ID;
-                if ( $z->lat != '' )  array_push($ret, $z);
-            }
+                $z->country = $country;
 
+                if ( $z->lat != '' )  {
+                    $y = json_encode($z,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK|JSON_UNESCAPED_UNICODE );
+                    array_push($ret, $y);
+                }
+            }
 
         }
 
-        echo json_encode( $ret,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK );
+        echo '[' . "\n" . implode( $ret, ",\n" ) . ']';
 
     }
 

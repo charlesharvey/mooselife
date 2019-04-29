@@ -37,7 +37,12 @@
                 <div class="stuff_container">
 
 
-                    <h4 class="open_marker"  ><?php echo $location->post_title; ?> </h4>
+                    <h4 class="open_marker"><?php echo $location->post_title; ?> </h4>
+
+                    <?php // $countries = get_the_terms( $location->ID, 'country'); ?>
+                    <?php // $country = ( $countries ) ?  $countries[0] : false; ?>
+                    <?php // if ($country)  echo '<span class="country">' .   $country->name .'</span>'; ?>
+
                     <div class="location_content">
                         <?php the_content(); ?>
                     </div>
