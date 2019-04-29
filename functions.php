@@ -664,7 +664,7 @@ function locations_for_map(){
                 $z->country = $country;
 
                 if ( $z->lat != '' )  {
-                    $y = json_encode($z,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK|JSON_UNESCAPED_UNICODE );
+                    $y = json_encode($z,  JSON_UNESCAPED_SLASHES );
                     array_push($ret, $y);
                 }
             }
