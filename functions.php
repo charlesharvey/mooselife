@@ -539,6 +539,25 @@ add_action('init', 'create_custom_post_types'); // Add our HTML5 Blank Custom Po
 
 function create_custom_post_types() {
 
+
+    $labels = array(
+        'name'                       => 'Countries',
+        'singular_name'              => 'Country',
+    );
+
+    $args = array(
+        'labels'                     => $labels,
+        'hierarchical'               => false,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => false,
+    );
+    register_taxonomy( 'country', array( 'location' ), $args );
+
+
+
     register_post_type('location', // Register Custom Post Type
     array(
         'labels' => array(
