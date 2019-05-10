@@ -11,11 +11,26 @@
     <aside>
         <?php $locations = get_posts( array('post_type' => 'location', 'posts_per_page' => -1 )); ?>
         <?php $days_travelled = days_travelled($locations); ?>
-
+        <?php $countries = false; // get_terms('country'); ?>
         <div  id="map_functions">
             <ul>
-            <li><a class="button" id="see_all" href="#">See all</a></li>
-            <li><a class="button" id="see_latest" href="#">Latest</a></li>
+                <li>
+                    <a class="button country_picker" data-country="all" id="see_all" href="#">See all</a>
+                    <?php if ($countries) : ?>
+                    <ul>
+                        <?php foreach ($countries as $country) : ?>
+                            <?php if ($country->count > 0) : ?>
+                            <li>
+                                <a href="#" class="button country_picker" data-country="<?php echo $country->slug; ?>">
+                                    <?php echo $country->name; ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php endforeach; ?>
+                        </ul>
+                        <?php endif; ?>
+                </li>
+                <li><a class="button" id="see_latest" href="#">Latest</a></li>
             </ul>
             <ul class="right">
                 <li><a class="button" id="days_spent" href="#"><?php echo $days_travelled; ?></a></li>
@@ -75,9 +90,9 @@
     </script>
 
 
-<div id="lightbox_outer">
-    <div id="lightbox_inner">Loading...</div>
-</div>
+    <div id="lightbox_outer">
+        <div id="lightbox_inner">Loading...</div>
+    </div>
 
 <?php endwhile; ?>
 

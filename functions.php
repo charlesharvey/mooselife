@@ -137,8 +137,9 @@ function webfactor_styles()
     // wp_register_style('fl_gallery_css', $tdu  . '/js/featherlight.gallery.css', array(), wf_version()  );
     // wp_enqueue_style('fl_gallery_css'); // Enqueue it!
 
-    wp_register_style('wf_style', $tdu  . '/style.css', array(), wf_version(),  'all');
+    wp_register_style('wf_style', $tdu  . '/css/global.css', array(), wf_version(),  'all');
     wp_enqueue_style('wf_style'); // Enqueue it!
+
 
     $hour =   intval( date('H', time()  ) );
     if ($hour > 18) {
@@ -654,7 +655,7 @@ function locations_for_map(){
             $latlonsplit = explode( ',', $latlon);
 
             $countries = get_the_terms( $location->ID, 'country');
-            $country = ( $countries ) ?  $countries[0]->name : '-';
+            $country = ( $countries ) ?  $countries[0]->slug : '-';
 
             if (sizeof($latlonsplit) == 2) {
                 $z->title = $location->post_title;
@@ -664,7 +665,7 @@ function locations_for_map(){
                 $z->country = $country;
 
                 if ( $z->lat != '' )  {
-                    $y = json_encode($z,  JSON_UNESCAPED_SLASHES );
+                    $y = json_encode($z,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK|JSON_UNESCAPED_UNICODE );
                     array_push($ret, $y);
                 }
             }
