@@ -636,14 +636,8 @@ function create_custom_post_types() {
 
 
 
-function locations_for_map(){
-    $locations =  get_posts(
-        array(
-            'post_type'  => 'location',
-            'order' => 'ASC',
-            'orderby' => 'date',
-            'posts_per_page' => -1
-        ) );
+function locations_for_map($locations){
+
 
         $ret = array();
         foreach ($locations as $location) {
