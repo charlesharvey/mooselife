@@ -666,6 +666,8 @@ function locations_for_map($locations){
 
         }
 
+        $ret = array_reverse($ret);
+
         echo '[' . "\n" . implode( $ret, ",\n" ) . ']';
 
     }

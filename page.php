@@ -6,7 +6,7 @@
     <?php $locations = get_posts( array(
         'post_type' => 'location',
         'posts_per_page' => -1,
-        'order' => 'ASC',
+        'order' => 'DESC',
         'orderby' => 'date',
      )); ?>
 <?php get_template_part('partials/locations'); ?>
