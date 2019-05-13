@@ -8,7 +8,8 @@
         <div  id="map_functions">
             <ul>
                 <li>
-                    <a class="button country_picker" data-country="all" id="see_all" href="#">View all</a>
+                    <a href="#" class="button">Countries</a>
+
                     <?php if ($countries) : ?>
                     <ul>
                         <?php foreach ($countries as $country) : ?>
@@ -20,13 +21,18 @@
                             </li>
                         <?php endif; ?>
                         <?php endforeach; ?>
-                        <li>
-                            <a href="<?php echo $home_url; ?>" class="button">All countries</a>
-                        </li>
+                        <li><a href="<?php echo $home_url; ?>" class="button">All</a></li>
                         </ul>
                         <?php endif; ?>
                 </li>
-                <li><a class="button" id="see_latest" href="#">Latest</a></li>
+                <li>
+                    <a class="button" href="#">Points</a>
+                    <ul>
+                        <li><a href="#" class="button" id="see_latest">Latest</a></li>
+                        <li><a class="button country_picker" data-country="all" id="see_all" href="#">All</a></li>
+                    </ul>
+
+                </li>
             </ul>
             <ul class="right">
                 <li><a class="button" id="days_spent" href="#"><?php echo $days_travelled; ?></a></li>
