@@ -18,7 +18,9 @@
         )
     )); ?>
     <?php get_template_part('partials/locations'); ?>
-
+<script>
+    var zoom_out = true;
+</script>
 
 
 <?php else: ?>

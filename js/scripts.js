@@ -103,14 +103,12 @@ window.onload = function(){
         }
 
 
-
-
-        if (locations.length > 1) {
-            map.setZoom(12);
-            map.setCenter( locations[ locations.length - 1] );
-        } else {
+        if (typeof zoom_out !== 'undefined' || locations.length == 1) {
             map.initialZoom = true;
             map.fitBounds(bounds);
+        } else {
+            map.setZoom(9);
+            map.setCenter( locations[ locations.length - 1] );
         }
 
 
