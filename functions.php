@@ -15,13 +15,11 @@ External Modules/Files
 Theme Support
 \*------------------------------------*/
 
-if (!isset($content_width))
-{
+if (!isset($content_width)) {
     $content_width = 900;
 }
 
-if (function_exists('add_theme_support'))
-{
+if (function_exists('add_theme_support')) {
     // Add Menu Support
     add_theme_support('menus');
 
@@ -69,7 +67,8 @@ function webfactor_nav()
     );
 }
 
-function wf_version(){
+function wf_version()
+{
     return '0.1.3';
 }
 
@@ -77,19 +76,15 @@ function wf_version(){
 function webfactor_header_scripts()
 {
     if ($GLOBALS['pagenow'] != 'wp-login.php') {
-
-
         $tdu = get_template_directory_uri();
 
-        wp_register_script('gmaps', '//maps.google.com/maps/api/js?key=AIzaSyAxQfqRqtPLAW4BolFMCxTiv9y--R8CXdU', array(), wf_version(), true  );
+        wp_register_script('gmaps', '//maps.google.com/maps/api/js?key=AIzaSyAxQfqRqtPLAW4BolFMCxTiv9y--R8CXdU', array(), wf_version(), true);
         wp_enqueue_script('gmaps'); // Enqueue it!
 
         if (is_admin()) {
-            wp_register_script('adminscripts', $tdu  . '/js/adminscripts.js', array(), wf_version(), true  );
+            wp_register_script('adminscripts', $tdu  . '/js/adminscripts.js', array(), wf_version(), true);
             wp_enqueue_script('adminscripts'); // Enqueue it!
         } else {
-
-
             wp_deregister_script('jquery');
 
             // wp_register_script('featherlight', $tdu  . '/js/featherlight.js', array('jquery'), wf_version(), true  );
@@ -98,18 +93,14 @@ function webfactor_header_scripts()
             // wp_register_script('fl_gallery', $tdu  . '/js/featherlight.gallery.js', array('jquery'), wf_version(), true  );
             // wp_enqueue_script('fl_gallery'); // Enqueue it!
 
-            wp_register_script('lazyload', $tdu  . '/js/lazyload.min.js', array(), wf_version(), true  );
+            wp_register_script('lazyload', $tdu  . '/js/lazyload.min.js', array(), wf_version(), true);
             wp_enqueue_script('lazyload'); // Enqueue it!
 
 
 
-            wp_register_script('scripts', $tdu  . '/js/scripts.js', array(), wf_version(), true  );
+            wp_register_script('scripts', $tdu  . '/js/scripts.js', array(), wf_version(), true);
             wp_enqueue_script('scripts'); // Enqueue it!
-
         }
-
-
-
     }
 }
 
@@ -117,7 +108,7 @@ function webfactor_header_scripts()
 function webfactor_conditional_scripts()
 {
     if (is_page('pagenamehere')) {
-        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), wf_version() ); // Conditional script(s)
+        wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), wf_version()); // Conditional script(s)
         wp_enqueue_script('scriptname'); // Enqueue it!
     }
 }
@@ -125,11 +116,10 @@ function webfactor_conditional_scripts()
 // Load HTML5 Blank styles
 function webfactor_styles()
 {
-
     $tdu = get_template_directory_uri();
 
 
-    wp_dequeue_style( 'wp-block-library' );
+    wp_dequeue_style('wp-block-library');
 
     // wp_register_style('featherlightcss', $tdu  . '/js/featherlight.css', array(), wf_version()  );
     // wp_enqueue_style('featherlightcss'); // Enqueue it!
@@ -137,16 +127,15 @@ function webfactor_styles()
     // wp_register_style('fl_gallery_css', $tdu  . '/js/featherlight.gallery.css', array(), wf_version()  );
     // wp_enqueue_style('fl_gallery_css'); // Enqueue it!
 
-    wp_register_style('wf_style', $tdu  . '/css/global.css', array(), wf_version(),  'all');
+    wp_register_style('wf_style', $tdu  . '/css/global.css', array(), wf_version(), 'all');
     wp_enqueue_style('wf_style'); // Enqueue it!
 
 
-    $hour =   intval( date('H', time()  ) );
+    $hour =   intval(date('H', time()));
     if ($hour > 18) {
-        wp_register_style('wf_style_dark', $tdu  . '/style_dark.css', array(), wf_version(),  'all');
+        wp_register_style('wf_style_dark', $tdu  . '/style_dark.css', array(), wf_version(), 'all');
         wp_enqueue_style('wf_style_dark'); // Enqueue it!
     }
-
 }
 
 // Register HTML5 Blank Navigation
@@ -197,8 +186,7 @@ function add_slug_to_body_class($classes)
 }
 
 // If Dynamic Sidebar Exists
-if (function_exists('register_sidebar'))
-{
+if (function_exists('register_sidebar')) {
     // Define Sidebar Widget Area 1
     register_sidebar(array(
         'name' => __('Widget Area 1', 'webfactor'),
@@ -294,14 +282,14 @@ function html5_style_remove($tag)
 }
 
 // Remove thumbnail width and height dimensions that prevent fluid images in the_thumbnail
-function remove_thumbnail_dimensions( $html )
+function remove_thumbnail_dimensions($html)
 {
     $html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
     return $html;
 }
 
 // Custom Gravatar in Settings > Discussion
-function webfactorgravatar ($avatar_defaults)
+function webfactorgravatar($avatar_defaults)
 {
     $myavatar = get_template_directory_uri() . '/img/gravatar.jpg';
     $avatar_defaults[$myavatar] = "Custom Gravatar";
@@ -312,7 +300,7 @@ function webfactorgravatar ($avatar_defaults)
 function enable_threaded_comments()
 {
     if (!is_admin()) {
-        if (is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
+        if (is_singular() and comments_open() and (get_option('thread_comments') == 1)) {
             wp_enqueue_script('comment-reply');
         }
     }
@@ -324,21 +312,22 @@ function webfactorcomments($comment, $args, $depth)
     $GLOBALS['comment'] = $comment;
     extract($args, EXTR_SKIP);
 
-    if ( 'div' == $args['style'] ) {
+    if ('div' == $args['style']) {
         $tag = 'div';
         $add_below = 'comment';
     } else {
         $tag = 'li';
         $add_below = 'div-comment';
-    }
-    ?>
+    } ?>
     <!-- heads up: starting < for the html tag (li or div) in the next line: -->
-    <<?php echo $tag ?> <?php comment_class(empty( $args['has_children'] ) ? '' : 'parent') ?> id="comment-<?php comment_ID() ?>">
-    <?php if ( 'div' != $args['style'] ) : ?>
+    <<?php echo $tag ?> <?php comment_class(empty($args['has_children']) ? '' : 'parent') ?> id="comment-<?php comment_ID() ?>">
+    <?php if ('div' != $args['style']) : ?>
         <div id="div-comment-<?php comment_ID() ?>" class="comment-body">
         <?php endif; ?>
         <div class="comment-author vcard">
-            <?php if ($args['avatar_size'] != 0) echo get_avatar( $comment, $args['180'] ); ?>
+            <?php if ($args['avatar_size'] != 0) {
+        echo get_avatar($comment, $args['180']);
+    } ?>
             <?php printf(__('<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link()) ?>
         </div>
         <?php if ($comment->comment_approved == '0') : ?>
@@ -346,21 +335,21 @@ function webfactorcomments($comment, $args, $depth)
             <br />
         <?php endif; ?>
 
-        <div class="comment-meta commentmetadata"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>">
+        <div class="comment-meta commentmetadata"><a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)) ?>">
             <?php
-            printf( __('%1$s at %2$s'), get_comment_date(),  get_comment_time()) ?></a><?php edit_comment_link(__('(Edit)'),'  ','' );
-            ?>
+            printf(__('%1$s at %2$s'), get_comment_date(), get_comment_time()) ?></a><?php edit_comment_link(__('(Edit)'), '  ', ''); ?>
         </div>
 
         <?php comment_text() ?>
 
         <div class="reply">
-            <?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+            <?php comment_reply_link(array_merge($args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
         </div>
-        <?php if ( 'div' != $args['style'] ) : ?>
+        <?php if ('div' != $args['style']) : ?>
         </div>
     <?php endif; ?>
-<?php }
+<?php
+}
 
 /*------------------------------------*\
 Actions + Filters + ShortCodes
@@ -439,8 +428,8 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 
 
 
-function chilly_nav($menu){
-
+function chilly_nav($menu)
+{
     wp_nav_menu(
         array(
             'theme_location'  => $menu,
@@ -461,14 +450,13 @@ function chilly_nav($menu){
             'walker'          => ''
         )
     );
-
 }
 
-function chilly_map( $atts, $content = null ) {
-
-    $attributes = shortcode_atts( array(
+function chilly_map($atts, $content = null)
+{
+    $attributes = shortcode_atts(array(
         'title' => "Rue du Midi 15 Case postale 411 1020 Renens"
-    ), $atts );
+    ), $atts);
 
 
 
@@ -476,60 +464,59 @@ function chilly_map( $atts, $content = null ) {
     $chilly_map = '<div id="map_container_1"></div>';
     $chilly_map .= "<script> var latt = 46.5380683; var lonn=6.5812023; var map_title = '" . $title . "'  </script>";
     return $chilly_map;
-
 }
-add_shortcode( 'chilly_map', 'chilly_map' );
+add_shortcode('chilly_map', 'chilly_map');
 
 
-function disable_wp_emojicons() {
+function disable_wp_emojicons()
+{
 
     // all actions related to emojis
-    remove_action( 'admin_print_styles', 'print_emoji_styles' );
-    remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-    remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-    remove_action( 'wp_print_styles', 'print_emoji_styles' );
-    remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-    remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-    remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
 
     // filter to remove TinyMCE emojis
     // add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
 }
-add_action( 'init', 'disable_wp_emojicons' );
+add_action('init', 'disable_wp_emojicons');
 
 
-function remove_json_api () {
+function remove_json_api()
+{
 
     // Remove the REST API lines from the HTML Header
-    remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
-    remove_action( 'wp_head', 'wp_oembed_add_discovery_links', 10 );
+    remove_action('wp_head', 'rest_output_link_wp_head', 10);
+    remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
     // Remove the REST API endpoint.
-    remove_action( 'rest_api_init', 'wp_oembed_register_route' );
+    remove_action('rest_api_init', 'wp_oembed_register_route');
     // Turn off oEmbed auto discovery.
-    add_filter( 'embed_oembed_discover', '__return_false' );
+    add_filter('embed_oembed_discover', '__return_false');
     // Don't filter oEmbed results.
-    remove_filter( 'oembed_dataparse', 'wp_filter_oembed_result', 10 );
+    remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10);
     // Remove oEmbed discovery links.
-    remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+    remove_action('wp_head', 'wp_oembed_add_discovery_links');
     // Remove oEmbed-specific JavaScript from the front-end and back-end.
-    remove_action( 'wp_head', 'wp_oembed_add_host_js' );
+    remove_action('wp_head', 'wp_oembed_add_host_js');
     // Remove all embeds rewrite rules.
     // add_filter( 'rewrite_rules_array', 'disable_embeds_rewrites' );
-
 }
-add_action( 'after_setup_theme', 'remove_json_api' );
+add_action('after_setup_theme', 'remove_json_api');
 
 
 
 
 
-function thumbnail_of_post_url( $post_id,  $size='large'  ) {
-
-    $image_id = get_post_thumbnail_id(  $post_id );
-    $image_url = wp_get_attachment_image_src($image_id, $size  );
+function thumbnail_of_post_url($post_id, $size='large')
+{
+    $image_id = get_post_thumbnail_id($post_id);
+    $image_url = wp_get_attachment_image_src($image_id, $size);
     $image = $image_url[0];
     return $image;
-
 }
 
 
@@ -538,9 +525,8 @@ function thumbnail_of_post_url( $post_id,  $size='large'  ) {
 add_action('init', 'create_custom_post_types'); // Add our HTML5 Blank Custom Post Type
 
 
-function create_custom_post_types() {
-
-
+function create_custom_post_types()
+{
     $labels = array(
         'name'                       => 'Countries',
         'singular_name'              => 'Country',
@@ -555,18 +541,18 @@ function create_custom_post_types() {
         'show_in_nav_menus'          => true,
         'show_tagcloud'              => false,
     );
-    register_taxonomy( 'country', array( 'location' ), $args );
+    register_taxonomy('country', array( 'location' ), $args);
 
 
 
 
 
-      $trip_labels = array(
+    $trip_labels = array(
           'name'                       => 'Trips',
           'singular_name'              => 'Trip',
       );
 
-      $trip_args = array(
+    $trip_args = array(
           'labels'                     => $trip_labels,
           'hierarchical'               => false,
           'public'                     => true,
@@ -575,7 +561,7 @@ function create_custom_post_types() {
           'show_in_nav_menus'          => true,
           'show_tagcloud'              => false,
       );
-      register_taxonomy( 'trip', array( 'location' ), $args );
+    register_taxonomy('trip', array( 'location' ), $trip_args);
 
 
 
@@ -650,52 +636,48 @@ function create_custom_post_types() {
     //       'show_tagcloud'              => false,
     //   );
     //   register_taxonomy( 'expense_cat', array( 'expense' ), $args_expense_cat );
-
 }
 
 
 
 
-function locations_for_map($locations){
+function locations_for_map($locations)
+{
+    $ret = array();
+    foreach ($locations as $location) {
+        $z = new stdClass();
 
 
-        $ret = array();
-        foreach ($locations as $location) {
+        $latlon = get_field('latitude', $location->ID);
+        $latlonsplit = explode(',', $latlon);
 
-            $z = new stdClass();
+        $countries = get_the_terms($location->ID, 'country');
+        $country = ($countries) ?  $countries[0]->slug : '-';
 
+        if (sizeof($latlonsplit) == 2) {
+            $z->title = $location->post_title;
+            $z->lat = round($latlonsplit[0] * 100000) / 100000;
+            $z->lng = round($latlonsplit[1] * 100000) / 100000;
+            $z->id =  $location->ID;
+            $z->country = $country;
 
-            $latlon = get_field('latitude',  $location->ID);
-            $latlonsplit = explode( ',', $latlon);
-
-            $countries = get_the_terms( $location->ID, 'country');
-            $country = ( $countries ) ?  $countries[0]->slug : '-';
-
-            if (sizeof($latlonsplit) == 2) {
-                $z->title = $location->post_title;
-                $z->lat = round($latlonsplit[0] * 100000) / 100000;
-                $z->lng = round($latlonsplit[1] * 100000) / 100000;
-                $z->id =  $location->ID;
-                $z->country = $country;
-
-                if ( $z->lat != '' )  {
-                    $y = json_encode($z,  JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK|JSON_UNESCAPED_UNICODE );
-                    array_push($ret, $y);
-                }
+            if ($z->lat != '') {
+                $y = json_encode($z, JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK|JSON_UNESCAPED_UNICODE);
+                array_push($ret, $y);
             }
-
         }
-
-        $ret = array_reverse($ret);
-
-        echo '[' . "\n" . implode( $ret, ",\n" ) . ']';
-
     }
 
+    $ret = array_reverse($ret);
+
+    echo '[' . "\n" . implode($ret, ",\n") . ']';
+}
 
 
-    function days_travelled($locations) {
-        if (sizeof($locations ) > 1) {
+
+    function days_travelled($locations)
+    {
+        if (sizeof($locations) > 1) {
             $first = $locations[0];
             $last = end($locations);
 
@@ -709,18 +691,15 @@ function locations_for_map($locations){
             } else {
                 return $diff_in_days . ' days';
             }
-
-
-
         } else {
             return 0;
         }
-
     }
 
 
 
-    function nice_date($string, $format) {
+    function nice_date($string, $format)
+    {
         $time = strtotime($string);
         $d =  date($format, $time);
         return $d;
@@ -738,21 +717,24 @@ function locations_for_map($locations){
     //
 
     add_filter('manage_location_posts_columns', 'custom_location_columns');
-    function custom_location_columns( $defaults ) {
+    function custom_location_columns($defaults)
+    {
         $defaults['latitude']  = "Lng/Lat";
         return $defaults;
     }
 
 
-    add_action( 'manage_location_posts_custom_column', 'custom_location_table_content', 10, 2 );
-    function custom_location_table_content( $column_name, $post_id ) {
+    add_action('manage_location_posts_custom_column', 'custom_location_table_content', 10, 2);
+    function custom_location_table_content($column_name, $post_id)
+    {
         if ($column_name == 'latitude') {
             echo get_field('latitude', $post_id);
         }
     }
 
     // add_action('add_meta_boxes', 'wporg_add_custom_box');
-    function wporg_add_custom_box() {
+    function wporg_add_custom_box()
+    {
         add_meta_box(
             'location_finder_box',   // Unique ID
             'Location Finder',  // Box title
@@ -760,7 +742,8 @@ function locations_for_map($locations){
             'location'  // Post type
         );
     }
-    function location_finder_box_html() {
+    function location_finder_box_html()
+    {
         $str =  '<input type="text"  id="location_search" name="location_search" placeholder="type location here" />';
         $str .= '<a href="#" id="location_search_button">Search</a>';
         $str .= '<ul id="location_results"></ul>';
@@ -769,12 +752,13 @@ function locations_for_map($locations){
     }
 
 
-    add_filter('pre_get_posts', 'set_post_order_in_admin', 5 );
-    function set_post_order_in_admin( $wp_query ) {
+    add_filter('pre_get_posts', 'set_post_order_in_admin', 5);
+    function set_post_order_in_admin($wp_query)
+    {
         global $pagenow;
-        if ( is_admin() && 'edit.php' == $pagenow && !isset($_GET['orderby'])) {
-            $wp_query->set( 'orderby', 'date' );
-            $wp_query->set( 'order', 'DESC' );
+        if (is_admin() && 'edit.php' == $pagenow && !isset($_GET['orderby'])) {
+            $wp_query->set('orderby', 'date');
+            $wp_query->set('order', 'DESC');
         }
     }
 
