@@ -559,6 +559,26 @@ function create_custom_post_types() {
 
 
 
+
+
+      $trip_labels = array(
+          'name'                       => 'Trips',
+          'singular_name'              => 'Trip',
+      );
+
+      $trip_args = array(
+          'labels'                     => $trip_labels,
+          'hierarchical'               => false,
+          'public'                     => true,
+          'show_ui'                    => true,
+          'show_admin_column'          => true,
+          'show_in_nav_menus'          => true,
+          'show_tagcloud'              => false,
+      );
+      register_taxonomy( 'trip', array( 'location' ), $args );
+
+
+
     register_post_type('location', // Register Custom Post Type
     array(
         'labels' => array(
