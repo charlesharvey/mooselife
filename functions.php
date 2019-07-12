@@ -765,7 +765,22 @@ function locations_for_map($locations)
 
 
 
-
-
+/// set a default trip category on a location if one is not set
+add_action('save_post', 'set_default_trip_cat_for_locations', 100, 2);
+function set_default_trip_cat_for_locations($post_id, $post)
+{
+    if ($post->post_status === 'publish' && $post->post_type === 'location') {
+        $defaults = array(
+        'trip' => array( 'trip-2' ),
+        );
+        $taxonomies = get_object_taxonomies($post->post_type);
+        foreach ((array) $taxonomies as $taxonomy) {
+            $terms = wp_get_post_terms($post_id, $taxonomy);
+            if (empty($terms) && array_key_exists($taxonomy, $defaults)) {
+                wp_set_object_terms($post_id, $defaults[$taxonomy], $taxonomy);
+            }
+        }
+    }
+}
 
     ?>
