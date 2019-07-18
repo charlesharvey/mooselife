@@ -12,7 +12,7 @@
         array(
             'taxonomy' => 'trip',
             'field' => 'slug',
-            'terms' => 'trip_2'
+            'terms' => 'trip-2'
         )
     )
      )); ?>
