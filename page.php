@@ -3,19 +3,26 @@
 
 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
-    <?php $locations = get_posts(array(
-        'post_type' => 'location',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-        'orderby' => 'date',
-        'tax_query' => array(
-        array(
-            'taxonomy' => 'trip',
-            'field' => 'slug',
-            'terms' => 'trip-2'
-        )
-    )
-     )); ?>
+<?php
+ $loc_args = array(
+    'post_type' => 'location',
+    'posts_per_page' => -1,
+    'order' => 'DESC',
+    'orderby' => 'date'
+  );
+
+  if (isset($_GET['all_trips'])) :
+  else:
+    $loc_args['tax_query'] = array(
+      array(
+          'taxonomy' => 'trip',
+          'field' => 'slug',
+          'terms' => 'trip-2'
+      )
+    );
+  endif;
+ ?>
+    <?php $locations = get_posts($loc_args); ?>
 <?php get_template_part('partials/locations'); ?>
 
 

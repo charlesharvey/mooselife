@@ -29,7 +29,8 @@
                 <a class="button" href="#">Points</a>
                 <ul>
                     <li><a href="#" class="button" id="see_latest">Latest</a></li>
-                    <li><a class="button country_picker" data-country="all" id="see_all" href="#">All</a></li>
+                    <li><a class="button country_picker" data-country="all" id="see_all" href="#">This trip</a></li>
+                    <li><a class="button country_picker" href="<?php echo $home_url; ?>/?all_trips">All trips</a></li>
                 </ul>
 
             </li>
