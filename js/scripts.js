@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function () {
 
     'use strict';
 
@@ -10,18 +10,18 @@ window.onload = function(){
 
     // LIGHTBOX
     // LIGHTBOX
-    var lightbox_outer =  document.getElementById('lightbox_outer');
-    var lightbox_inner =  document.getElementById('lightbox_inner');
+    var lightbox_outer = document.getElementById('lightbox_outer');
+    var lightbox_inner = document.getElementById('lightbox_inner');
 
-    lightbox_outer.addEventListener("click", function(e) {
+    lightbox_outer.addEventListener("click", function (e) {
         lightbox_outer.style.display = "none";
     });
 
-    var lightbox_links =  document.getElementsByClassName('lightbox_link');
-    for(var op = 0; op < lightbox_links.length; op++) {
-        (function(index) {
+    var lightbox_links = document.getElementsByClassName('lightbox_link');
+    for (var op = 0; op < lightbox_links.length; op++) {
+        (function (index) {
             var llink = lightbox_links[index];
-            llink.addEventListener("click", function(e) {
+            llink.addEventListener("click", function (e) {
                 e.preventDefault();
                 lightbox_outer.style.display = "flex";
                 var href = llink.getAttribute('href');
@@ -42,7 +42,7 @@ window.onload = function(){
     if (typeof locations !== 'undefined' && typeof google !== 'undefined') {
 
 
-        var map_theme=[{"featureType": "administrative","elementType": "labels.text.fill","stylers": [{"color": "#444444"}]},{"featureType": "landscape","elementType": "all","stylers": [{"color": "#f2f2f2"}]},{"featureType": "poi","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "all","stylers": [{"saturation": -100},{"lightness": 45}]},{"featureType": "road.highway","elementType": "all","stylers": [{"visibility": "simplified"}]},{"featureType": "road.arterial","elementType": "labels.icon","stylers": [{"visibility": "off"}]},{"featureType": "transit","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "water","elementType": "all","stylers": [{"color": "#46bcec"},{"visibility": "on"}]}];
+        var map_theme = [{ "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#444444" }] }, { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] }, { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] }, { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#46bcec" }, { "visibility": "on" }] }];
 
 
         var map_options = {
@@ -50,26 +50,26 @@ window.onload = function(){
             mapTypeControl: true,
             scrollwheel: true,
             draggable: true,
-            navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+            navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL },
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles: map_theme
         };
 
 
 
-        var map_container =  document.getElementById('map_container');
+        var map_container = document.getElementById('map_container');
         var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
         };
         var km_travelled = 0;
 
 
-        var map = new google.maps.Map( map_container , map_options);
+        var map = new google.maps.Map(map_container, map_options);
         var bounds = new google.maps.LatLngBounds();
-        var infowindow = new google.maps.InfoWindow({content: '...'});
+        var infowindow = new google.maps.InfoWindow({ content: '...' });
         var markers = [];
 
-        for (var  i = 0;  i < locations.length ;i++) {
+        for (var i = 0; i < locations.length; i++) {
 
             var hue = i / locations.length * 360;
             var color = hslToHex(hue, 90, 50);
@@ -81,8 +81,8 @@ window.onload = function(){
 
             if (i < locations.length - 1) {
 
-                var b_location = locations[i +1 ];
-                var path_locations = [ location, b_location ];
+                var b_location = locations[i + 1];
+                var path_locations = [location, b_location];
                 var flightPath = new google.maps.Polyline({
                     path: path_locations,
                     icons: [{
@@ -92,12 +92,12 @@ window.onload = function(){
                     }],
                     map: map,
                     geodesic: true,
-                    strokeColor:  color ,
+                    strokeColor: color,
                     strokeOpacity: 1.0,
                     strokeWeight: 2
                 });
 
-                km_travelled +=  distanceCalc( location, b_location );
+                km_travelled += distanceCalc(location, b_location);
             }
 
         }
@@ -107,23 +107,24 @@ window.onload = function(){
             map.initialZoom = true;
             map.fitBounds(bounds);
         } else {
-            map.setZoom(9);
-            map.setCenter( locations[ locations.length - 1] );
+            map.fitBounds(bounds);
+            // map.setZoom(9);
+            // map.setCenter( locations[ locations.length - 1] );
         }
 
 
         // if click on location box, open that google marker
-        var $location_boxes =  document.getElementsByClassName('location');
+        var $location_boxes = document.getElementsByClassName('location');
         var $location_offsets = [];
         calculateLocationOffset();
 
-        for(var lb = 0; lb < $location_boxes.length; lb++) {
-            (function(index) {
+        for (var lb = 0; lb < $location_boxes.length; lb++) {
+            (function (index) {
                 var location_box = $location_boxes[index];
                 var $location_id = location_box.dataset.id;
                 // $location_offsets.push( {id: $location_id, offset: location_box.offsetTop   }  )
                 if ($location_id) {
-                    location_box.addEventListener("click", function(e) {
+                    location_box.addEventListener("click", function (e) {
                         e.preventDefault();
                         openMarkerFromId($location_id);
                     })
@@ -134,9 +135,9 @@ window.onload = function(){
         // if scroll down to a specific location box, open that google marker
         var $window = window;
         var currentBoxId = null;
-        $window.onscroll = function(e) {
+        $window.onscroll = function (e) {
             var scrollY = $window.scrollY;
-            var nearestBox = $location_offsets.find( (locof) => (locof.offset) >= scrollY );
+            var nearestBox = $location_offsets.find((locof) => (locof.offset) >= scrollY);
             if (currentBoxId != nearestBox.id) {
                 currentBoxId = nearestBox.id;
                 openMarkerFromId(currentBoxId);
@@ -149,12 +150,12 @@ window.onload = function(){
         function calculateLocationOffset() {
             console.log('calculateLocationOffset');
             $location_offsets = [];
-            for(var lb = 0; lb < $location_boxes.length; lb++) {
-                (function(index) {
+            for (var lb = 0; lb < $location_boxes.length; lb++) {
+                (function (index) {
                     var location_box = $location_boxes[index];
                     var $location_id = location_box.dataset.id;
                     var offset = location_box.offsetTop + location_box.clientHeight;
-                    $location_offsets.push( {id: $location_id, offset: offset }  )
+                    $location_offsets.push({ id: $location_id, offset: offset })
                 })(lb);
             };
         }
@@ -171,31 +172,31 @@ window.onload = function(){
         }
 
         function openMarker(marker) {
-            infowindow.setContent( marker.title );
+            infowindow.setContent(marker.title);
             infowindow.open(map, marker);
             // map.setCenter( marker.position );
         }
 
 
-        var see_all =  document.getElementById('see_all');
-        see_all.addEventListener("click", function(e) {
+        var see_all = document.getElementById('see_all');
+        see_all.addEventListener("click", function (e) {
             e.preventDefault();
             if (bounds) {
                 map.fitBounds(bounds);
             }
         });
-        var see_latest =  document.getElementById('see_latest');
-        see_latest.addEventListener("click", function(e) {
+        var see_latest = document.getElementById('see_latest');
+        see_latest.addEventListener("click", function (e) {
             e.preventDefault();
             if (markers) {
-                var marker = markers[markers.length -1];
+                var marker = markers[markers.length - 1];
                 openMarker(marker);
                 map.setZoom(12);
 
             }
         });
 
-        var total_distance =  document.getElementById('total_distance');
+        var total_distance = document.getElementById('total_distance');
         if (km_travelled) {
             total_distance.innerHTML = '~' + Math.round(km_travelled) + ' KM ';
         }
@@ -216,21 +217,21 @@ window.onload = function(){
 
 
 
-function distanceCalc(a,b) {
-    var e = Math, ra = e.PI/180;
+function distanceCalc(a, b) {
+    var e = Math, ra = e.PI / 180;
     var alat = a.lat * ra, blat = b.lat * ra, d = alat - blat;
     var g = a.lng * ra - b.lng * ra;
-    var f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(alat) * e.cos
-    (blat) * e.pow(e.sin(g/2), 2)));
+    var f = 2 * e.asin(e.sqrt(e.pow(e.sin(d / 2), 2) + e.cos(alat) * e.cos
+        (blat) * e.pow(e.sin(g / 2), 2)));
     return f * 6378.137;
 }
 
 
 
-function addPointToMap(map,  location, bounds, infowindow, markers, color ) {
+function addPointToMap(map, location, bounds, infowindow, markers, color) {
     var latitude = location.lat;
     var longitude = location.lng;
-    var latlng = new google.maps.LatLng(  latitude , longitude);
+    var latlng = new google.maps.LatLng(latitude, longitude);
     var marker = new google.maps.Marker({
         map: map,
         position: latlng,
@@ -246,11 +247,11 @@ function addPointToMap(map,  location, bounds, infowindow, markers, color ) {
         }
     });
 
-    marker.addListener('click', function() {
-        infowindow.setContent( this.title );
+    marker.addListener('click', function () {
+        infowindow.setContent(this.title);
         // +  '<br><a href="#l='+ this.id + '">See photos</a>'
         var box = document.getElementById('location_' + this.id);
-        window.scrollTo( {top:   box.offsetTop  - 20 , behavior: 'smooth'  });
+        window.scrollTo({ top: box.offsetTop - 20, behavior: 'smooth' });
 
         infowindow.open(map, this);
     });
