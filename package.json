@@ -15,7 +15,7 @@
     "gulp-real-favicon": "^0.3.2",
     "gulp-sass": "^4.0.1",
     "gulp-watch": "^5.0.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.19"
   },
   "scripts": {
     "test": "say hello"
