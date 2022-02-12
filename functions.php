@@ -736,7 +736,7 @@ add_action('save_post', 'set_default_trip_cat_for_locations', 100, 2);
 function set_default_trip_cat_for_locations($post_id, $post) {
     if ($post->post_status === 'publish' && $post->post_type === 'location') {
         $defaults = array(
-            'trip' => array('trip-2'),
+            'trip' => array(get_field('current_trip', 'option')),
         );
         $taxonomies = get_object_taxonomies($post->post_type);
         foreach ((array) $taxonomies as $taxonomy) {
