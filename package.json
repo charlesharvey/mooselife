@@ -7,15 +7,10 @@
     "lazyload": "^2.0.0-rc.2"
   },
   "devDependencies": {
-    "extend": ">=3.0.2",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-image-resize": "^0.13.0",
-    "gulp-minify": "^3.0.15",
-    "gulp-real-favicon": "^0.3.2",
-    "gulp-sass": "^4.0.1",
-    "gulp-watch": "^5.0.1",
-    "lodash": "^4.17.11"
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-watch": "^5.0.1"
   },
   "scripts": {
     "test": "say hello"
