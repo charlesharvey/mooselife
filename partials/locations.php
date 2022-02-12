@@ -4,7 +4,8 @@
 <aside>
 
     <?php $days_travelled = days_travelled($locations); ?>
-    <?php $countries = get_terms('country'); ?>
+    <?php $countries = get_terms(['taxonomy' => 'country', 'hide_empty' => true]); ?>
+    <?php $trips = get_terms(['taxonomy' => 'trip', 'hide_empty' => false]); ?>
     <div id="map_functions">
         <ul>
             <li>
@@ -13,15 +14,17 @@
                 <?php if ($countries) : ?>
                     <ul>
                         <?php foreach ($countries as $country) : ?>
-                            <?php if ($country->count > 0) : ?>
-                                <li>
-                                    <a href="<?php echo $home_url; ?>/country/<?php echo $country->slug; ?>" class="button country_picker" data-country="<?php echo $country->slug; ?>">
-                                        <?php echo $country->name; ?>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
+                            <li>
+                                <a href="<?php echo $home_url; ?>/country/<?php echo $country->slug; ?>" class="button country_picker" data-country="<?php echo $country->slug; ?>">
+                                    <?php echo $country->name; ?>
+                                </a>
+                            </li>
                         <?php endforeach; ?>
-                        <li><a href="<?php echo $home_url; ?>" class="button">All</a></li>
+                        <li><a href="<?php echo $home_url; ?>" class="button">All trips</a></li>
+
+
+
+
                     </ul>
                 <?php endif; ?>
             </li>
@@ -31,6 +34,13 @@
                     <li><a href="#" class="button" id="see_latest">Latest</a></li>
                     <li><a class="button country_picker" data-country="all" id="see_all" href="#">This trip</a></li>
                     <li><a class="button country_picker" href="<?php echo $home_url; ?>/?all_trips">All trips</a></li>
+                    <?php foreach ($trips as $trip) : ?>
+                        <li>
+                            <a href="<?php echo $home_url; ?>/trip/<?php echo $trip->slug; ?>" class="button country_picker">
+                                <?php echo $trip->description; ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
 
             </li>
@@ -42,11 +52,11 @@
     </div>
 
 
-    <?php foreach ($locations as $location) :  setup_postdata( $location );  ?>
+    <?php foreach ($locations as $location) :  setup_postdata($location);  ?>
         <?php $gallery = get_field('gallery', $location->ID); ?>
         <?php $day = nice_date($location->post_date, 'j'); ?>
         <?php $month = nice_date($location->post_date, 'M'); ?>
-        <div class="location"  data-id="<?php echo $location->ID; ?>"  id="location_<?php echo $location->ID; ?>">
+        <div class="location" data-id="<?php echo $location->ID; ?>" id="location_<?php echo $location->ID; ?>">
 
             <div class="date_container">
                 <div class="day"><?php echo $day; ?></div>
@@ -57,18 +67,21 @@
 
                 <h4 class="open_marker"><?php echo $location->post_title; ?> </h4>
 
-                <?php // $countries = get_the_terms( $location->ID, 'country'); ?>
-                <?php // $country = ( $countries ) ?  $countries[0] : false; ?>
-                <?php // if ($country)  echo '<span class="country">' .   $country->name .'</span>'; ?>
+                <?php // $countries = get_the_terms( $location->ID, 'country'); 
+                ?>
+                <?php // $country = ( $countries ) ?  $countries[0] : false; 
+                ?>
+                <?php // if ($country)  echo '<span class="country">' .   $country->name .'</span>'; 
+                ?>
 
                 <div class="location_content">
                     <?php the_content(); ?>
                 </div>
-                <?php if ($gallery): ?>
+                <?php if ($gallery) : ?>
                     <div class="gallery" data-featherlight-gallery data-featherlight-filter="a">
                         <?php foreach ($gallery as $image) : ?>
                             <a target="gallery" class="lightbox_link" href="<?php echo $image['sizes']['large']; ?>">
-                                <img width="<?php echo $image['sizes']['medium-width']; ?>" height="<?php echo $image['sizes']['medium-height']; ?>" class="lazyload" data-src="<?php echo $image['sizes']['medium']; ?>"  alt="" />
+                                <img width="<?php echo $image['sizes']['medium-width']; ?>" height="<?php echo $image['sizes']['medium-height']; ?>" class="lazyload" data-src="<?php echo $image['sizes']['medium']; ?>" alt="" />
 
                             </a>
                         <?php endforeach; ?>
@@ -77,14 +90,14 @@
             </div>
         </div>
     <?php endforeach; ?>
-    <?php wp_reset_postdata();?>
+    <?php wp_reset_postdata(); ?>
 </aside>
 
 
 
 
 <script type="text/javascript">
-var locations = <?php locations_for_map($locations); ?>;
+    var locations = <?php locations_for_map($locations); ?>;
 </script>
 
 
