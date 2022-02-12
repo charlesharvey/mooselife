@@ -4,8 +4,8 @@
 <aside>
 
     <?php $days_travelled = days_travelled($locations); ?>
-    <?php $countries = get_terms(['taxonomy' => 'country', 'hide_empty' => true]); ?>
-    <?php $trips = get_terms(['taxonomy' => 'trip', 'hide_empty' => false]); ?>
+    <?php $countries = get_terms(['taxonomy' => 'country', 'hide_empty' => true, 'orderby' => 'name']); ?>
+    <?php $trips = get_terms(['taxonomy' => 'trip', 'hide_empty' => false, 'orderby' => 'slug']); ?>
     <div id="map_functions">
         <ul>
             <li>
