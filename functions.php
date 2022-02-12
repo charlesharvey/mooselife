@@ -43,8 +43,7 @@ Functions
 \*------------------------------------*/
 
 // HTML5 Blank navigationh
-function webfactor_nav()
-{
+function webfactor_nav() {
     wp_nav_menu(
         array(
             'theme_location'  => 'header-menu',
@@ -67,14 +66,12 @@ function webfactor_nav()
     );
 }
 
-function wf_version()
-{
+function wf_version() {
     return '0.1.4';
 }
 
 // Load HTML5 Blank scripts (header.php)
-function webfactor_header_scripts()
-{
+function webfactor_header_scripts() {
     if ($GLOBALS['pagenow'] != 'wp-login.php') {
         $tdu = get_template_directory_uri();
 
@@ -105,8 +102,7 @@ function webfactor_header_scripts()
 }
 
 // Load HTML5 Blank conditional scripts
-function webfactor_conditional_scripts()
-{
+function webfactor_conditional_scripts() {
     if (is_page('pagenamehere')) {
         wp_register_script('scriptname', get_template_directory_uri() . '/js/scriptname.js', array('jquery'), wf_version()); // Conditional script(s)
         wp_enqueue_script('scriptname'); // Enqueue it!
@@ -114,8 +110,7 @@ function webfactor_conditional_scripts()
 }
 
 // Load HTML5 Blank styles
-function webfactor_styles()
-{
+function webfactor_styles() {
     $tdu = get_template_directory_uri();
 
 
@@ -139,8 +134,7 @@ function webfactor_styles()
 }
 
 // Register HTML5 Blank Navigation
-function register_html5_menu()
-{
+function register_html5_menu() {
     register_nav_menus(array( // Using array to specify more menus if needed
         'primary-navigation' => __('Primary Menu', 'webfactor'), // Main Navigation
         'footer-navigation' => __('Footer Menu', 'webfactor'), // Sidebar Navigation
@@ -149,27 +143,23 @@ function register_html5_menu()
 }
 
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
-function my_wp_nav_menu_args($args = '')
-{
+function my_wp_nav_menu_args($args = '') {
     $args['container'] = false;
     return $args;
 }
 
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
-function my_css_attributes_filter($var)
-{
+function my_css_attributes_filter($var) {
     return is_array($var) ? array() : '';
 }
 
 // Remove invalid rel attribute values in the categorylist
-function remove_category_rel_from_category_list($thelist)
-{
+function remove_category_rel_from_category_list($thelist) {
     return str_replace('rel="category tag"', 'rel="tag"', $thelist);
 }
 
 // Add page slug to body class, love this - Credit: Starkers Wordpress Theme
-function add_slug_to_body_class($classes)
-{
+function add_slug_to_body_class($classes) {
     global $post;
     if (is_home()) {
         $key = array_search('blog', $classes);
@@ -211,8 +201,7 @@ if (function_exists('register_sidebar')) {
 }
 
 // Remove wp_head() injected Recent Comment styles
-function my_remove_recent_comments_style()
-{
+function my_remove_recent_comments_style() {
     global $wp_widget_factory;
     remove_action('wp_head', array(
         $wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
@@ -221,8 +210,7 @@ function my_remove_recent_comments_style()
 }
 
 // Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
-function html5wp_pagination()
-{
+function html5wp_pagination() {
     global $wp_query;
     $big = 999999999;
     echo paginate_links(array(
@@ -240,14 +228,12 @@ function html5wp_index($length) // Create 20 Word Callback for Index page Excerp
 }
 
 // Create 40 Word Callback for Custom Post Excerpts, call using html5wp_excerpt('html5wp_custom_post');
-function html5wp_custom_post($length)
-{
+function html5wp_custom_post($length) {
     return 40;
 }
 
 // Create the Custom Excerpts callback
-function html5wp_excerpt($length_callback = '', $more_callback = '')
-{
+function html5wp_excerpt($length_callback = '', $more_callback = '') {
     global $post;
     if (function_exists($length_callback)) {
         add_filter('excerpt_length', $length_callback);
@@ -263,42 +249,36 @@ function html5wp_excerpt($length_callback = '', $more_callback = '')
 }
 
 // Custom View Article link to Post
-function html5_blank_view_article($more)
-{
+function html5_blank_view_article($more) {
     global $post;
     return '... <a class="view_article" href="' . get_permalink($post->ID) . '">' . __('lire plus', 'webfactor') . '</a>';
 }
 
 // Remove Admin bar
-function remove_admin_bar()
-{
+function remove_admin_bar() {
     return false;
 }
 
 // Remove 'text/css' from our enqueued stylesheet
-function html5_style_remove($tag)
-{
+function html5_style_remove($tag) {
     return preg_replace('~\s+type=["\'][^"\']++["\']~', '', $tag);
 }
 
 // Remove thumbnail width and height dimensions that prevent fluid images in the_thumbnail
-function remove_thumbnail_dimensions($html)
-{
+function remove_thumbnail_dimensions($html) {
     $html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
     return $html;
 }
 
 // Custom Gravatar in Settings > Discussion
-function webfactorgravatar($avatar_defaults)
-{
+function webfactorgravatar($avatar_defaults) {
     $myavatar = get_template_directory_uri() . '/img/gravatar.jpg';
     $avatar_defaults[$myavatar] = "Custom Gravatar";
     return $avatar_defaults;
 }
 
 // Threaded Comments
-function enable_threaded_comments()
-{
+function enable_threaded_comments() {
     if (!is_admin()) {
         if (is_singular() and comments_open() and (get_option('thread_comments') == 1)) {
             wp_enqueue_script('comment-reply');
@@ -307,8 +287,7 @@ function enable_threaded_comments()
 }
 
 // Custom Comments Callback
-function webfactorcomments($comment, $args, $depth)
-{
+function webfactorcomments($comment, $args, $depth) {
     $GLOBALS['comment'] = $comment;
     extract($args, EXTR_SKIP);
 
@@ -321,34 +300,34 @@ function webfactorcomments($comment, $args, $depth)
     } ?>
     <!-- heads up: starting < for the html tag (li or div) in the next line: -->
     <<?php echo $tag ?> <?php comment_class(empty($args['has_children']) ? '' : 'parent') ?> id="comment-<?php comment_ID() ?>">
-    <?php if ('div' != $args['style']) : ?>
-        <div id="div-comment-<?php comment_ID() ?>" class="comment-body">
-        <?php endif; ?>
-        <div class="comment-author vcard">
-            <?php if ($args['avatar_size'] != 0) {
-        echo get_avatar($comment, $args['180']);
-    } ?>
-            <?php printf(__('<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link()) ?>
-        </div>
-        <?php if ($comment->comment_approved == '0') : ?>
-            <em class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.') ?></em>
-            <br />
-        <?php endif; ?>
-
-        <div class="comment-meta commentmetadata"><a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)) ?>">
-            <?php
-            printf(__('%1$s at %2$s'), get_comment_date(), get_comment_time()) ?></a><?php edit_comment_link(__('(Edit)'), '  ', ''); ?>
-        </div>
-
-        <?php comment_text() ?>
-
-        <div class="reply">
-            <?php comment_reply_link(array_merge($args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-        </div>
         <?php if ('div' != $args['style']) : ?>
-        </div>
-    <?php endif; ?>
-<?php
+            <div id="div-comment-<?php comment_ID() ?>" class="comment-body">
+            <?php endif; ?>
+            <div class="comment-author vcard">
+                <?php if ($args['avatar_size'] != 0) {
+                    echo get_avatar($comment, $args['180']);
+                } ?>
+                <?php printf(__('<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link()) ?>
+            </div>
+            <?php if ($comment->comment_approved == '0') : ?>
+                <em class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.') ?></em>
+                <br />
+            <?php endif; ?>
+
+            <div class="comment-meta commentmetadata"><a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)) ?>">
+                    <?php
+                    printf(__('%1$s at %2$s'), get_comment_date(), get_comment_time()) ?></a><?php edit_comment_link(__('(Edit)'), '  ', ''); ?>
+            </div>
+
+            <?php comment_text() ?>
+
+            <div class="reply">
+                <?php comment_reply_link(array_merge($args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+            </div>
+            <?php if ('div' != $args['style']) : ?>
+            </div>
+        <?php endif; ?>
+    <?php
 }
 
 /*------------------------------------*\
@@ -414,8 +393,7 @@ ShortCode Functions
 \*------------------------------------*/
 
 // Shortcode Demo with Nested Capability
-function html5_shortcode_demo($atts, $content = null)
-{
+function html5_shortcode_demo($atts, $content = null) {
     return '<div class="shortcode-demo">' . do_shortcode($content) . '</div>'; // do_shortcode allows for nested Shortcodes
 }
 
@@ -428,8 +406,7 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 
 
 
-function chilly_nav($menu)
-{
+function chilly_nav($menu) {
     wp_nav_menu(
         array(
             'theme_location'  => $menu,
@@ -452,8 +429,7 @@ function chilly_nav($menu)
     );
 }
 
-function chilly_map($atts, $content = null)
-{
+function chilly_map($atts, $content = null) {
     $attributes = shortcode_atts(array(
         'title' => "Rue du Midi 15 Case postale 411 1020 Renens"
     ), $atts);
@@ -468,8 +444,7 @@ function chilly_map($atts, $content = null)
 add_shortcode('chilly_map', 'chilly_map');
 
 
-function disable_wp_emojicons()
-{
+function disable_wp_emojicons() {
 
     // all actions related to emojis
     remove_action('admin_print_styles', 'print_emoji_styles');
@@ -486,8 +461,7 @@ function disable_wp_emojicons()
 add_action('init', 'disable_wp_emojicons');
 
 
-function remove_json_api()
-{
+function remove_json_api() {
 
     // Remove the REST API lines from the HTML Header
     remove_action('wp_head', 'rest_output_link_wp_head', 10);
@@ -511,8 +485,7 @@ add_action('after_setup_theme', 'remove_json_api');
 
 
 
-function thumbnail_of_post_url($post_id, $size='large')
-{
+function thumbnail_of_post_url($post_id, $size = 'large') {
     $image_id = get_post_thumbnail_id($post_id);
     $image_url = wp_get_attachment_image_src($image_id, $size);
     $image = $image_url[0];
@@ -525,8 +498,7 @@ function thumbnail_of_post_url($post_id, $size='large')
 add_action('init', 'create_custom_post_types'); // Add our HTML5 Blank Custom Post Type
 
 
-function create_custom_post_types()
-{
+function create_custom_post_types() {
     $labels = array(
         'name'                       => 'Countries',
         'singular_name'              => 'Country',
@@ -541,60 +513,62 @@ function create_custom_post_types()
         'show_in_nav_menus'          => true,
         'show_tagcloud'              => false,
     );
-    register_taxonomy('country', array( 'location' ), $args);
+    register_taxonomy('country', array('location'), $args);
 
 
 
 
 
     $trip_labels = array(
-          'name'                       => 'Trips',
-          'singular_name'              => 'Trip',
-      );
+        'name'                       => 'Trips',
+        'singular_name'              => 'Trip',
+    );
 
     $trip_args = array(
-          'labels'                     => $trip_labels,
-          'hierarchical'               => false,
-          'public'                     => true,
-          'show_ui'                    => true,
-          'show_admin_column'          => true,
-          'show_in_nav_menus'          => true,
-          'show_tagcloud'              => false,
-      );
-    register_taxonomy('trip', array( 'location' ), $trip_args);
+        'labels'                     => $trip_labels,
+        'hierarchical'               => false,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => false,
+    );
+    register_taxonomy('trip', array('location'), $trip_args);
 
 
 
-    register_post_type('location', // Register Custom Post Type
-    array(
-        'labels' => array(
-            'name' => __('Locations', 'html5blank'), // Rename these to suit
-            'singular_name' => __('Location', 'html5blank'),
-            'add_new' => __('Ajouter', 'html5blank'),
-            'add_new_item' => __('Add New Location', 'html5blank'),
-            'edit' => __('Edit', 'html5blank'),
-            'edit_item' => __('Edit Location', 'html5blank'),
-            'new_item' => __('New Location', 'html5blank'),
-            'view' => __('View Location', 'html5blank'),
-            'view_item' => __('View Location', 'html5blank'),
-            'search_items' => __('Search Locations', 'html5blank'),
-            'not_found' => __('No Locations found', 'html5blank'),
-            'not_found_in_trash' => __('No Locations found in Trash', 'html5blank')
-        ),
-        'public' => true,
-        'menu_position' =>  5,
-        'menu_icon'   => 'dashicons-location',
-        'exclude_from_search' => false,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
-        'supports' => array(
-            'title',
-            'thumbnail',
-            'editor'
-        ), // Go to Dashboard Custom HTML5 Blank post for supports
-        'can_export' => true, // Allows export in Tools > Export
-        'taxonomies' => array( ) // Add Category and Post Tags support
-    ));
+    register_post_type(
+        'location', // Register Custom Post Type
+        array(
+            'labels' => array(
+                'name' => __('Locations', 'html5blank'), // Rename these to suit
+                'singular_name' => __('Location', 'html5blank'),
+                'add_new' => __('Ajouter', 'html5blank'),
+                'add_new_item' => __('Add New Location', 'html5blank'),
+                'edit' => __('Edit', 'html5blank'),
+                'edit_item' => __('Edit Location', 'html5blank'),
+                'new_item' => __('New Location', 'html5blank'),
+                'view' => __('View Location', 'html5blank'),
+                'view_item' => __('View Location', 'html5blank'),
+                'search_items' => __('Search Locations', 'html5blank'),
+                'not_found' => __('No Locations found', 'html5blank'),
+                'not_found_in_trash' => __('No Locations found in Trash', 'html5blank')
+            ),
+            'public' => true,
+            'menu_position' =>  5,
+            'menu_icon'   => 'dashicons-location',
+            'exclude_from_search' => false,
+            'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
+            'has_archive' => true,
+            'supports' => array(
+                'title',
+                'thumbnail',
+                'editor'
+            ), // Go to Dashboard Custom HTML5 Blank post for supports
+            'can_export' => true, // Allows export in Tools > Export
+            'taxonomies' => array() // Add Category and Post Tags support
+        )
+    );
 
 
     // register_post_type('expense', // Register Custom Post Type
@@ -641,8 +615,7 @@ function create_custom_post_types()
 
 
 
-function locations_for_map($locations)
-{
+function locations_for_map($locations) {
     $ret = array();
     foreach ($locations as $location) {
         $z = new stdClass();
@@ -662,7 +635,7 @@ function locations_for_map($locations)
             $z->country = $country;
 
             if ($z->lat != '') {
-                $y = json_encode($z, JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK|JSON_UNESCAPED_UNICODE);
+                $y = json_encode($z, JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
                 array_push($ret, $y);
             }
         }
@@ -675,103 +648,95 @@ function locations_for_map($locations)
 
 
 
-    function days_travelled($locations)
-    {
-        if (sizeof($locations) > 1) {
-            $first = $locations[0];
-            $last = end($locations);
+function days_travelled($locations) {
+    if (sizeof($locations) > 1) {
+        $first = $locations[0];
+        $last = end($locations);
 
-            $f_date = strtotime($first->post_date);
-            $l_date = strtotime($last->post_date);
-            $diff = ($f_date - $l_date);
-            $diff_in_days = round($diff / 60 / 60 /24);
+        $f_date = strtotime($first->post_date);
+        $l_date = strtotime($last->post_date);
+        $diff = ($f_date - $l_date);
+        $diff_in_days = round($diff / 60 / 60 / 24);
 
-            if ($diff_in_days == 1) {
-                return '1 day';
-            } else {
-                return $diff_in_days . ' days';
-            }
+        if ($diff_in_days == 1) {
+            return '1 day';
         } else {
-            return 0;
+            return $diff_in_days . ' days';
         }
+    } else {
+        return 0;
     }
+}
 
 
 
-    function nice_date($string, $format)
-    {
-        $time = strtotime($string);
-        $d =  date($format, $time);
-        return $d;
+function nice_date($string, $format) {
+    $time = strtotime($string);
+    $d =  date($format, $time);
+    return $d;
+}
+
+
+// function show_all_on_expense_archive( $wp_query ) {
+// 	if ( is_archive() ){
+// 		global $wp_query;
+//         $wp_query->set( 'posts_per_page',-1 );
+//
+// 	}
+// }
+// add_filter('pre_get_posts', 'show_all_on_expense_archive' );
+//
+
+add_filter('manage_location_posts_columns', 'custom_location_columns');
+function custom_location_columns($defaults) {
+    $defaults['latitude']  = "Lng/Lat";
+    return $defaults;
+}
+
+
+add_action('manage_location_posts_custom_column', 'custom_location_table_content', 10, 2);
+function custom_location_table_content($column_name, $post_id) {
+    if ($column_name == 'latitude') {
+        echo get_field('latitude', $post_id);
     }
+}
+
+// add_action('add_meta_boxes', 'wporg_add_custom_box');
+function wporg_add_custom_box() {
+    add_meta_box(
+        'location_finder_box',   // Unique ID
+        'Location Finder',  // Box title
+        'location_finder_box_html',  // Content callback, must be of type callable
+        'location'  // Post type
+    );
+}
+function location_finder_box_html() {
+    $str =  '<input type="text"  id="location_search" name="location_search" placeholder="type location here" />';
+    $str .= '<a href="#" id="location_search_button">Search</a>';
+    $str .= '<ul id="location_results"></ul>';
+
+    echo $str;
+}
 
 
-    // function show_all_on_expense_archive( $wp_query ) {
-    // 	if ( is_archive() ){
-    // 		global $wp_query;
-    //         $wp_query->set( 'posts_per_page',-1 );
-    //
-    // 	}
-    // }
-    // add_filter('pre_get_posts', 'show_all_on_expense_archive' );
-    //
-
-    add_filter('manage_location_posts_columns', 'custom_location_columns');
-    function custom_location_columns($defaults)
-    {
-        $defaults['latitude']  = "Lng/Lat";
-        return $defaults;
+add_filter('pre_get_posts', 'set_post_order_in_admin', 5);
+function set_post_order_in_admin($wp_query) {
+    global $pagenow;
+    if (is_admin() && 'edit.php' == $pagenow && !isset($_GET['orderby'])) {
+        $wp_query->set('orderby', 'date');
+        $wp_query->set('order', 'DESC');
     }
-
-
-    add_action('manage_location_posts_custom_column', 'custom_location_table_content', 10, 2);
-    function custom_location_table_content($column_name, $post_id)
-    {
-        if ($column_name == 'latitude') {
-            echo get_field('latitude', $post_id);
-        }
-    }
-
-    // add_action('add_meta_boxes', 'wporg_add_custom_box');
-    function wporg_add_custom_box()
-    {
-        add_meta_box(
-            'location_finder_box',   // Unique ID
-            'Location Finder',  // Box title
-            'location_finder_box_html',  // Content callback, must be of type callable
-            'location'  // Post type
-        );
-    }
-    function location_finder_box_html()
-    {
-        $str =  '<input type="text"  id="location_search" name="location_search" placeholder="type location here" />';
-        $str .= '<a href="#" id="location_search_button">Search</a>';
-        $str .= '<ul id="location_results"></ul>';
-
-        echo $str;
-    }
-
-
-    add_filter('pre_get_posts', 'set_post_order_in_admin', 5);
-    function set_post_order_in_admin($wp_query)
-    {
-        global $pagenow;
-        if (is_admin() && 'edit.php' == $pagenow && !isset($_GET['orderby'])) {
-            $wp_query->set('orderby', 'date');
-            $wp_query->set('order', 'DESC');
-        }
-    }
+}
 
 
 
 
 /// set a default trip category on a location if one is not set
 add_action('save_post', 'set_default_trip_cat_for_locations', 100, 2);
-function set_default_trip_cat_for_locations($post_id, $post)
-{
+function set_default_trip_cat_for_locations($post_id, $post) {
     if ($post->post_status === 'publish' && $post->post_type === 'location') {
         $defaults = array(
-        'trip' => array( 'trip-2' ),
+            'trip' => array('trip-2'),
         );
         $taxonomies = get_object_taxonomies($post->post_type);
         foreach ((array) $taxonomies as $taxonomy) {
@@ -782,5 +747,11 @@ function set_default_trip_cat_for_locations($post_id, $post)
         }
     }
 }
+
+
+if (function_exists('acf_add_options_page')) {
+    acf_add_options_page();
+}
+
 
     ?>
