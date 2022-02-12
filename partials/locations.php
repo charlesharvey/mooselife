@@ -9,6 +9,14 @@
     <div id="map_functions">
         <ul>
             <li>
+                <a class="button" href="#">Points</a>
+                <ul>
+                    <li><a href="#" class="button" id="see_latest">View latest</a></li>
+                    <li><a class="button country_picker" data-country="all" id="see_all" href="#">View all</a></li>
+                </ul>
+
+            </li>
+            <li>
                 <a href="#" class="button">Countries</a>
 
                 <?php if ($countries) : ?>
@@ -28,15 +36,6 @@
                     </ul>
                 <?php endif; ?>
             </li>
-            <li>
-                <a class="button" href="#">Points</a>
-                <ul>
-                    <li><a href="#" class="button" id="see_latest">View latest</a></li>
-                    <li><a class="button country_picker" data-country="all" id="see_all" href="#">View all</a></li>
-                </ul>
-
-            </li>
-
             <li>
                 <a class="button" href="#">Trips</a>
                 <ul>
