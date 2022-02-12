@@ -42,7 +42,7 @@
                     <?php foreach ($trips as $trip) : ?>
                         <li>
                             <a href="<?php echo $home_url; ?>/trip/<?php echo $trip->slug; ?>" class="button country_picker">
-                                <?php echo $trip->description; ?>
+                                <?php echo $trip->name; ?>
                             </a>
                         </li>
                     <?php endforeach; ?>
