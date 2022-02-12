@@ -33,7 +33,13 @@
                 <ul>
                     <li><a href="#" class="button" id="see_latest">Latest</a></li>
                     <li><a class="button country_picker" data-country="all" id="see_all" href="#">This trip</a></li>
-                    <li><a class="button country_picker" href="<?php echo $home_url; ?>/?all_trips">All trips</a></li>
+                </ul>
+
+            </li>
+
+            <li>
+                <a class="button" href="#">Trips</a>
+                <ul>
                     <?php foreach ($trips as $trip) : ?>
                         <li>
                             <a href="<?php echo $home_url; ?>/trip/<?php echo $trip->slug; ?>" class="button country_picker">
@@ -41,6 +47,8 @@
                             </a>
                         </li>
                     <?php endforeach; ?>
+                    <li><a class="button country_picker" href="<?php echo $home_url; ?>/?all_trips">All trips</a></li>
+
                 </ul>
 
             </li>
