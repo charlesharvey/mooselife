@@ -31,8 +31,8 @@
             <li>
                 <a class="button" href="#">Points</a>
                 <ul>
-                    <li><a href="#" class="button" id="see_latest">Latest</a></li>
-                    <li><a class="button country_picker" data-country="all" id="see_all" href="#">This trip</a></li>
+                    <li><a href="#" class="button" id="see_latest">View latest</a></li>
+                    <li><a class="button country_picker" data-country="all" id="see_all" href="#">View all</a></li>
                 </ul>
 
             </li>
