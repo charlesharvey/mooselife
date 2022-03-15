@@ -70,6 +70,7 @@ aside {
 
   h4 {
     cursor: pointer;
+    padding-left: 40px;
   }
 
   /* border-bottom: 1px solid #ddd; */
@@ -126,7 +127,7 @@ ul.right {
 }
 
 .stuff_container {
-  padding-left: 40px;
+  padding-left: 0px;
   position: relative;
 }
 
@@ -197,7 +198,7 @@ margin: 0 0 10px;
   img {
     width: 100%;
     height: auto;
-    padding: 0 40px 0 0;
+    padding: 0 0;
     margin: 0;
   }
 }
