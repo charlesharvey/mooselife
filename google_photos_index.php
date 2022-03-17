@@ -41,9 +41,16 @@ try {
 
     // The creation call returns the ID of the new album
     $albumId = $createdAlbum->getId();
+
+    var_dump($authCredentials);
+    echo "\n\n\n";
+    var_dump($createdAlbum);
+    echo "\n\n\n";
+    var_dump($albumId);
 } catch (\Google\ApiCore\ApiException $exception) {
     // Error during album creation
+    var_dump($exception);
 } catch (\Google\ApiCore\ValidationException $e) {
     // Error during client creation
-    echo $exception;
+    var_dump($exception);
 }
