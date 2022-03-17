@@ -14,6 +14,13 @@ $clientId = $clientSecretJson['client_id'];
 $clientSecret = $clientSecretJson['client_secret'];
 
 
+$scopes = array(
+    'https://www.googleapis.com/auth/photoslibrary.readonly',
+    'https://www.googleapis.com/auth/photoslibrary',
+    'https://www.googleapis.com/auth/photoslibrary.sharing'
+);
+
+
 $redirectURI = 'https://vamoose.us/wp-content/themes/mooselife/google_photos_auth.php';
 $oauth2 = new OAuth2([
     'clientId' => $clientId,
@@ -23,7 +30,7 @@ $oauth2 = new OAuth2([
     // You must authorize this URI in the Google API Console.
     'redirectUri' => $redirectURI,
     'tokenCredentialUri' => 'https://www.googleapis.com/oauth2/v4/token',
-    'scope' => array('photoslibrary.sharing'),
+    'scope' => $scopes,
 ]);
 
 // The authorization URI will, upon redirecting, return a parameter called code.
