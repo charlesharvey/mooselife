@@ -48,11 +48,12 @@ try {
     // LIST SHARED ALBUMS
     // LIST SHARED ALBUMS
     $pagedResponse = $photosLibraryClient->listSharedAlbums();
-    // By using iterateAllElements, pagination is handled for us.
-    $albums =  $pagedResponse->iterateAllElements();
-    foreach ($albums as $album) {
-        var_dump($album);
-        echo "\n\n";
+
+
+    // Iterate through all elements
+    foreach ($pagedResponse->iterateAllElements() as $element) {
+        var_dump($element);
+        echo "\n\n\n";
     }
 
     // LIST SHARED ALBUMS
