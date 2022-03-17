@@ -49,10 +49,11 @@ try {
     // LIST SHARED ALBUMS
     $pagedResponse = $photosLibraryClient->listSharedAlbums();
     // By using iterateAllElements, pagination is handled for us.
-    echo $templates->render(
-        'share::index',
-        ['albums' => $pagedResponse->iterateAllElements()]
-    );
+    $albums =  $pagedResponse->iterateAllElements();
+    foreach ($albums as $album) {
+        var_dump($album);
+        echo "\n\n";
+    }
 
     // LIST SHARED ALBUMS
     // LIST SHARED ALBUMS
