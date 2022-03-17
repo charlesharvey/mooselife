@@ -17,7 +17,7 @@ try {
     // $authCredentials =  $_SESSION['credentials'];
 
     $authCredentials = json_decode(
-        file_get_contents('./client_secret.json'),
+        file_get_contents('./photos_credentials.json'),
         true
     )['credentials'];
 
