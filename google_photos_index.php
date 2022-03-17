@@ -10,13 +10,7 @@ use Google\Auth\Credentials\UserRefreshCredentials;
 use Google\Photos\Library\V1\PhotosLibraryClient;
 use Google\Photos\Library\V1\PhotosLibraryResourceFactory;
 
-$authCredentials = json_decode(
-    file_get_contents('./photos_credentials.json'),
-    true
-);
-$scopes = $authCredentials['scopes'];
-$cred = $authCredentials['credentials'];
-$auth = array($scopes, $cred);
+
 
 
 try {
@@ -28,6 +22,13 @@ try {
 
 
 
+    $authCredentials = json_decode(
+        file_get_contents('./photos_credentials.json'),
+        true
+    );
+    $scopes = $authCredentials['scopes'];
+    $cred = $authCredentials['credentials'];
+    $auth = new UserRefreshCredentials(array($scopes, $cred));
 
     // Set up the Photos Library Client that interacts with the API
     $photosLibraryClient = new PhotosLibraryClient(['credentials' => $auth]);
