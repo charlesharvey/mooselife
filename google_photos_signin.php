@@ -43,6 +43,12 @@ if (!isset($_GET['code'])) {
     $authToken = $oauth2->fetchAuthToken();
     $refreshToken = $authToken['access_token'];
 
+
+    var_dump($oauth2);
+    var_dump($clientId);
+    var_dump($clientSecret);
+    var_dump($refreshToken);
+
     // The UserRefreshCredentials will use the refresh token to 'refresh' the credentials when
     // they expire.
     $_SESSION['credentials'] = new UserRefreshCredentials(
@@ -55,5 +61,5 @@ if (!isset($_GET['code'])) {
     );
 
     // Return the user to the home page.
-    header("Location: google_photos_index.php");
+    // header("Location: google_photos_index.php");
 }
