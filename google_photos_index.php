@@ -14,7 +14,12 @@ try {
     // Use the OAuth flow provided by the Google API Client Auth library
     // to authenticate users. See the file /src/common/common.php in the samples for a complete
     // authentication example.
-    $authCredentials =  $_SESSION['credentials'];
+    // $authCredentials =  $_SESSION['credentials'];
+
+    $authCredentials = json_decode(
+        file_get_contents('./client_secret.json'),
+        true
+    )['web'];
 
     // Set up the Photos Library Client that interacts with the API
     $photosLibraryClient = new PhotosLibraryClient(['credentials' => $authCredentials]);

@@ -1,3 +1,4 @@
 node_modules/
 client_secret.json
+photos_credentials.json
 /vendor/
