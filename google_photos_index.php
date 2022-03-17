@@ -46,5 +46,6 @@ try {
     var_dump($exception);
 } catch (\Google\ApiCore\ValidationException $e) {
     // Error during client creation
+    var_dump($_SESSION['credentials']);
     var_dump($e);
 }
