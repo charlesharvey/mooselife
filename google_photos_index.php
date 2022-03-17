@@ -25,8 +25,10 @@ try {
     $auth = array($scopes, $cred);
 
 
+    var_dump($auth);
+
     // Set up the Photos Library Client that interacts with the API
-    $photosLibraryClient = new PhotosLibraryClient(['credentials' => $auth]);
+    // $photosLibraryClient = new PhotosLibraryClient(['credentials' => $auth]);
 
     // CREATE AN ALBUM
     // CREATE AN ALBUM
@@ -42,8 +44,8 @@ try {
 
     // LIST SHARED ALBUMS
     // LIST SHARED ALBUMS
-    $pagedResponse = $photosLibraryClient->listSharedAlbums();
-    var_dump($pagedResponse);
+    // $pagedResponse = $photosLibraryClient->listSharedAlbums();
+    // var_dump($pagedResponse);
 
     // LIST SHARED ALBUMS
     // LIST SHARED ALBUMS
