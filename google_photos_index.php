@@ -10,22 +10,25 @@ use Google\Auth\Credentials\UserRefreshCredentials;
 use Google\Photos\Library\V1\PhotosLibraryClient;
 use Google\Photos\Library\V1\PhotosLibraryResourceFactory;
 
+$authCredentials = json_decode(
+    file_get_contents('./photos_credentials.json'),
+    true
+);
+$scopes = $authCredentials['scopes'];
+$cred = $authCredentials['credentials'];
+$auth = array($scopes, $cred);
+
+var_dump($auth);
+
 try {
     // Use the OAuth flow provided by the Google API Client Auth library
     // to authenticate users. See the file /src/common/common.php in the samples for a complete
     // authentication example.
     // $authCredentials =  $_SESSION['credentials'];
 
-    $authCredentials = json_decode(
-        file_get_contents('./photos_credentials.json'),
-        true
-    );
-    $scopes = $authCredentials['scopes'];
-    $cred = $authCredentials['credentials'];
-    $auth = array($scopes, $cred);
 
 
-    var_dump($auth);
+
 
     // Set up the Photos Library Client that interacts with the API
     // $photosLibraryClient = new PhotosLibraryClient(['credentials' => $auth]);
