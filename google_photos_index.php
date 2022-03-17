@@ -1,6 +1,21 @@
 <?php
 
 
+$scopes = array(
+    'https://www.googleapis.com/auth/photoslibrary.readonly',
+    'https://www.googleapis.com/auth/photoslibrary',
+    'https://www.googleapis.com/auth/photoslibrary.sharing'
+);
+
+$passwords =  [
+    'client_id' => "1068045923615-94a7np1q0mb3dfbooturpi64alfm1e4f.apps.googleusercontent.com",
+    'client_secret' => "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",
+    'refresh_token' =>"ya29.A0ARrdaM827z7nHyhvLTfU7jI60OH2VkrTGzadlzMnpn0hhzIcrRWsCtFWVY8mG9kcZJLqC83joJSvKW9uP7OSsem5nklt9Zph9jfDZKmC7SXZ4NjXcPJFVfBHplLH65CgFf0UeiC_C9FE7uJHUT7RjT4BW-rn" 
+]
+
+
+
+
 require './vendor/autoload.php';
 
 
