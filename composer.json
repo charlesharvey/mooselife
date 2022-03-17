@@ -1,0 +1,12 @@
+{
+    "name": "charles/mooselife",
+    "authors": [
+        {
+            "name": "Charles Harvey",
+            "email": "harvey.charles@gmail.com"
+        }
+    ],
+    "require": {
+        "google/photos-library": "^1.6"
+    }
+}
