@@ -28,7 +28,7 @@ try {
     );
     $scopes = $authCredentials['scopes'];
     $cred = $authCredentials['credentials'];
-    $auth = new UserRefreshCredentials(array($scopes, $cred));
+    $auth = new UserRefreshCredentials($scopes, $cred);
 
     // Set up the Photos Library Client that interacts with the API
     $photosLibraryClient = new PhotosLibraryClient(['credentials' => $auth]);
