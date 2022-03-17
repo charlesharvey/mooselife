@@ -19,7 +19,7 @@ try {
     $authCredentials = json_decode(
         file_get_contents('./client_secret.json'),
         true
-    );
+    )['credentials'];
 
     // Set up the Photos Library Client that interacts with the API
     $photosLibraryClient = new PhotosLibraryClient(['credentials' => $authCredentials]);
