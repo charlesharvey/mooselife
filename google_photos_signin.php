@@ -21,7 +21,7 @@ $scopes = array(
 );
 
 
-$redirectURI = 'https://vamoose.us/wp-content/themes/mooselife/google_photos_auth.php';
+$redirectURI = 'https://vamoose.us/wp-content/themes/mooselife/google_photos_signin.php';
 $oauth2 = new OAuth2([
     'clientId' => $clientId,
     'clientSecret' => $clientSecret,
