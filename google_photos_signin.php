@@ -60,6 +60,18 @@ if (!isset($_GET['code'])) {
         ]
     );
 
+    var_dump(
+
+        array(
+            $scopes,
+            [
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
+                'refresh_token' => $refreshToken
+            ]
+        )
+    );
+
     // Return the user to the home page.
-    header("Location: google_photos_index.php");
+    // header("Location: google_photos_index.php");
 }
