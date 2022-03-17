@@ -1,5 +1,10 @@
 <?php
 
+
+require './vendor/autoload.php';
+
+
+
 use Google\Auth\Credentials\UserRefreshCredentials;
 use Google\Photos\Library\V1\PhotosLibraryClient;
 use Google\Photos\Library\V1\PhotosLibraryResourceFactory;
