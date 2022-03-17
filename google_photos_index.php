@@ -52,7 +52,7 @@ try {
 
     // Iterate through all elements
     foreach ($pagedResponse->iterateAllElements() as $element) {
-        var_dump($element);
+        var_dump($element->getShareToken());
         echo "\n\n\n";
     }
 
