@@ -1,13 +1,13 @@
 <?php
 
-require '../vendor/autoload.php';
+require './vendor/autoload.php';
 
 use Google\Auth\Credentials\UserRefreshCredentials;
 use Google\Auth\OAuth2;
 
 
 $clientSecretJson = json_decode(
-    file_get_contents('../../client_secret.json'),
+    file_get_contents('./client_secret.json'),
     true
 )['web'];
 $clientId = $clientSecretJson['client_id'];
