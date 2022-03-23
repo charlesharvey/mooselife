@@ -4,7 +4,7 @@ window.onload = function () {
   // lAZY LOAD GALLERY IMAGES
   lazyload();
 
-  document.addEventListener("keypress", (e) => {
+  document.addEventListener("keydown", (e) => {
     if (e.key == "Escape") {
       closeLightbox();
     }
