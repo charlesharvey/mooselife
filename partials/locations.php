@@ -87,10 +87,19 @@
                 <?php if ($gallery) : ?>
                     <div class="gallery" data-featherlight-gallery data-featherlight-filter="a">
                         <?php foreach ($gallery as $image) : ?>
-                            <a target="gallery" class="lightbox_link" href="<?php echo $image['sizes']['large']; ?>">
-                                <img width="<?php echo $image['sizes']['medium-width']; ?>" height="<?php echo $image['sizes']['medium-height']; ?>" class="lazyload" data-src="<?php echo $image['sizes']['medium']; ?>" alt="" />
 
-                            </a>
+
+                            <?php if ($image->type == 'video') : ?>
+                                <video controls>
+                                    <source src="<?php echo $image['url']; ?>" type="<?php echo $image['mime_type']; ?>" />
+                                </video>
+                            <?php else : ?>
+                                <a target="gallery" class="lightbox_link" href="<?php echo $image['sizes']['large']; ?>">
+                                    <img width="<?php echo $image['sizes']['medium-width']; ?>" height="<?php echo $image['sizes']['medium-height']; ?>" class="lazyload" data-src="<?php echo $image['sizes']['medium']; ?>" alt="" />
+
+                                </a>
+                            <?php endif; ?>
+
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
