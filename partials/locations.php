@@ -89,7 +89,7 @@
                         <?php foreach ($gallery as $image) : ?>
 
 
-                            <?php if ($image->type == 'video') : ?>
+                            <?php if ($image['type'] == 'video') : ?>
                                 <video controls>
                                     <source src="<?php echo $image['url']; ?>" type="<?php echo $image['mime_type']; ?>" />
                                 </video>
