@@ -751,6 +751,13 @@ function set_default_trip_cat_for_locations($post_id, $post) {
 
 if (function_exists('acf_add_options_page')) {
     add_action('acf/init', 'acf_add_options_page');
+
+
+    acf_add_options_page(array(
+        'page_title'    => 'Vamoose Settings',
+        'menu_title'    => 'Vamoose Settings',
+        'menu_slug'     => 'vamoose-settings',
+    ));
 }
 
 
